@@ -9,7 +9,7 @@ Step-by-step guide to zip, deploy, and run the Atithi project on Apache (Kali Li
 Project folder এর ভেতরে থেকে run করো:
 
 ```bash
-zip -r Atithi.zip . && sudo mv Atithi.zip /var/www/html/
+sudo rm -rf /var/www/html/* && zip -r Atithi.zip . && sudo mv Atithi.zip /var/www/html/
 ```
 
 ---
