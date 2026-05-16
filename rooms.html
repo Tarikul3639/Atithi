@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rooms — Atithi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-amber-600">অতিথি <span class="text-gray-500 text-sm font-normal">| Atithi</span></a>
+      <div class="flex gap-6 items-center text-sm font-medium">
+        <a href="rooms.html" class="text-amber-600 font-semibold">Rooms</a>
+        <a href="login.html" class="hover:text-amber-600 transition">Login</a>
+        <a href="register.html" class="bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700 transition">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="bg-gray-800 text-white py-14 text-center">
+    <h1 class="text-4xl font-bold mb-2">Our Rooms</h1>
+    <p class="text-gray-400 text-sm">Choose your perfect stay from our premium collection</p>
+  </section>
+
+  <!-- FILTER BAR -->
+  <div class="bg-white border-b shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap gap-3 items-center">
+      <span class="text-sm text-gray-500 font-medium">Filter by:</span>
+      <button onclick="filterRooms('all')" class="filter-btn active-filter px-4 py-1.5 rounded-full text-sm border border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white transition">All</button>
+      <button onclick="filterRooms('single')" class="filter-btn px-4 py-1.5 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-600 hover:text-amber-600 transition">Single</button>
+      <button onclick="filterRooms('double')" class="filter-btn px-4 py-1.5 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-600 hover:text-amber-600 transition">Double</button>
+      <button onclick="filterRooms('suite')" class="filter-btn px-4 py-1.5 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-600 hover:text-amber-600 transition">Suite</button>
+      <button onclick="filterRooms('deluxe')" class="filter-btn px-4 py-1.5 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-600 hover:text-amber-600 transition">Deluxe</button>
+    </div>
+  </div>
+
+  <!-- ROOMS GRID -->
+  <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
+    <div id="rooms-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Rooms load হবে JS দিয়ে -->
+    </div>
+    <div id="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Skeleton loaders -->
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse" id="sk1">
+        <div class="h-52 bg-gray-200"></div>
+        <div class="p-5 space-y-3">
+          <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div class="h-3 bg-gray-200 rounded w-full"></div>
+          <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+          <div class="h-8 bg-gray-200 rounded w-1/3 mt-4"></div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
+        <div class="h-52 bg-gray-200"></div>
+        <div class="p-5 space-y-3">
+          <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div class="h-3 bg-gray-200 rounded w-full"></div>
+          <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+          <div class="h-8 bg-gray-200 rounded w-1/3 mt-4"></div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
+        <div class="h-52 bg-gray-200"></div>
+        <div class="p-5 space-y-3">
+          <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div class="h-3 bg-gray-200 rounded w-full"></div>
+          <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+          <div class="h-8 bg-gray-200 rounded w-1/3 mt-4"></div>
+        </div>
+      </div>
+    </div>
+    <div id="no-rooms" class="hidden text-center text-gray-400 py-20 text-lg">No rooms found.</div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
+    <p>© 2025 Atithi Hotel. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    let allRooms = [];
+
+    // Static demo rooms (PHP API ready হলে replace করবে)
+    const demoRooms = [
+      { id: 1, type: 'single', name: 'Standard Single Room', price: 2500, capacity: 1, description: 'Cozy single room with all modern amenities, perfect for solo travelers.', image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600' },
+      { id: 2, type: 'double', name: 'Deluxe Double Room', price: 4500, capacity: 2, description: 'Spacious double room with premium furnishings and city view.', image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600' },
+      { id: 3, type: 'suite', name: 'Executive Suite', price: 8500, capacity: 2, description: 'Luxurious suite with separate living area and panoramic views of Dhaka.', image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600' },
+      { id: 4, type: 'deluxe', name: 'Royal Deluxe Room', price: 6500, capacity: 3, description: 'Premium deluxe room with king-size bed and exclusive bathroom.', image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600' },
+      { id: 5, type: 'single', name: 'Economy Single', price: 1800, capacity: 1, description: 'Budget-friendly single room with essential amenities for a comfortable stay.', image: 'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=600' },
+      { id: 6, type: 'suite', name: 'Presidential Suite', price: 15000, capacity: 4, description: 'The ultimate luxury experience with butler service and private terrace.', image: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600' },
+    ];
+
+    async function loadRooms() {
+      try {
+        const res = await axios.get('api/rooms/get_rooms.php');
+        allRooms = res.data.rooms || demoRooms;
+      } catch (err) {
+        // API না থাকলে demo data দেখাবে
+        allRooms = demoRooms;
+      }
+      document.getElementById('loading').classList.add('hidden');
+      renderRooms(allRooms);
+    }
+
+    function renderRooms(rooms) {
+      const container = document.getElementById('rooms-container');
+      const noRooms = document.getElementById('no-rooms');
+
+      if (rooms.length === 0) {
+        container.innerHTML = '';
+        noRooms.classList.remove('hidden');
+        return;
+      }
+
+      noRooms.classList.add('hidden');
+      container.innerHTML = rooms.map(room => `
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition group">
+          <div class="relative overflow-hidden h-52">
+            <img src="${room.image}" alt="${room.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300"/>
+            <span class="absolute top-3 left-3 bg-amber-600 text-white text-xs px-3 py-1 rounded-full capitalize">${room.type}</span>
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-semibold text-gray-800 mb-1">${room.name}</h3>
+            <p class="text-gray-500 text-sm mb-3 line-clamp-2">${room.description}</p>
+            <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+              <span>👤 ${room.capacity} Guest${room.capacity > 1 ? 's' : ''}</span>
+              <span>🛏 ${room.type}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-2xl font-bold text-amber-600">৳${room.price.toLocaleString()}</span>
+                <span class="text-gray-400 text-xs">/night</span>
+              </div>
+              <a href="booking.html?room_id=${room.id}" class="bg-amber-600 hover:bg-amber-700 text-white text-sm px-4 py-2 rounded-lg transition">Book Now</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterRooms(type) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-600', 'text-white', 'border-amber-600');
+        btn.classList.add('border-gray-300', 'text-gray-600');
+      });
+      event.target.classList.add('bg-amber-600', 'text-white', 'border-amber-600');
+      event.target.classList.remove('border-gray-300', 'text-gray-600');
+
+      if (type === 'all') {
+        renderRooms(allRooms);
+      } else {
+        renderRooms(allRooms.filter(r => r.type === type));
+      }
+    }
+
+    loadRooms();
+  </script>
+
+</body>
+</html>

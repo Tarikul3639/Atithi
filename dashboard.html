@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Atithi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-amber-600">অতিথি <span class="text-gray-500 text-sm font-normal">| Atithi</span></a>
+      <div class="flex gap-6 items-center text-sm font-medium">
+        <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
+        <span class="text-gray-600">👤 <span id="nav-username">Guest</span></span>
+        <button onclick="handleLogout()" class="border border-red-400 text-red-500 px-4 py-2 rounded hover:bg-red-500 hover:text-white transition">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="bg-gray-800 text-white py-14 px-6">
+    <div class="max-w-7xl mx-auto">
+      <p class="text-amber-400 text-sm mb-1">Welcome back,</p>
+      <h1 class="text-4xl font-bold" id="user-name">Guest</h1>
+      <p class="text-gray-400 text-sm mt-1" id="user-email">guest@email.com</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="bg-white border-b shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="text-center">
+        <p class="text-3xl font-bold text-amber-600" id="stat-total">0</p>
+        <p class="text-gray-500 text-sm mt-1">Total Bookings</p>
+      </div>
+      <div class="text-center">
+        <p class="text-3xl font-bold text-green-500" id="stat-confirmed">0</p>
+        <p class="text-gray-500 text-sm mt-1">Confirmed</p>
+      </div>
+      <div class="text-center">
+        <p class="text-3xl font-bold text-blue-500" id="stat-upcoming">0</p>
+        <p class="text-gray-500 text-sm mt-1">Upcoming</p>
+      </div>
+      <div class="text-center">
+        <p class="text-3xl font-bold text-gray-500" id="stat-completed">0</p>
+        <p class="text-gray-500 text-sm mt-1">Completed</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 max-w-7xl mx-auto px-6 py-10 w-full">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">My Bookings</h2>
+      <a href="rooms.html" class="bg-amber-600 hover:bg-amber-700 text-white text-sm px-5 py-2 rounded-lg transition">+ New Booking</a>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="flex gap-2 mb-6 flex-wrap">
+      <button onclick="filterBookings('all')" class="tab-btn active-tab px-4 py-2 rounded-full text-sm bg-amber-600 text-white">All</button>
+      <button onclick="filterBookings('confirmed')" class="tab-btn px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-500 transition">Confirmed</button>
+      <button onclick="filterBookings('upcoming')" class="tab-btn px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-500 transition">Upcoming</button>
+      <button onclick="filterBookings('completed')" class="tab-btn px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-500 transition">Completed</button>
+      <button onclick="filterBookings('cancelled')" class="tab-btn px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-500 transition">Cancelled</button>
+    </div>
+
+    <!-- Bookings List -->
+    <div id="bookings-container" class="space-y-4"></div>
+    <div id="loading" class="space-y-4">
+      <div class="bg-white rounded-xl p-6 shadow-sm animate-pulse flex gap-4">
+        <div class="w-24 h-20 bg-gray-200 rounded-lg flex-shrink-0"></div>
+        <div class="flex-1 space-y-2">
+          <div class="h-4 bg-gray-200 rounded w-1/3"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/4"></div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl p-6 shadow-sm animate-pulse flex gap-4">
+        <div class="w-24 h-20 bg-gray-200 rounded-lg flex-shrink-0"></div>
+        <div class="flex-1 space-y-2">
+          <div class="h-4 bg-gray-200 rounded w-1/3"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/4"></div>
+        </div>
+      </div>
+    </div>
+    <div id="no-bookings" class="hidden text-center py-20">
+      <p class="text-6xl mb-4">🛏</p>
+      <p class="text-gray-500 text-lg mb-4">No bookings found.</p>
+      <a href="rooms.html" class="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition text-sm">Browse Rooms</a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
+    <p>© 2025 Atithi Hotel. All rights reserved.</p>
+  </footer>
+
+  <script src="js/dashboard.js"></script>
+  <script>
+    let allBookings = [];
+
+    // Demo user
+    const demoUser = { name: 'Tarikul Islam', email: 'tarikul@email.com' };
+
+    // Demo bookings
+    const demoBookings = [
+      { id: 1, room_name: 'Deluxe Double Room', room_type: 'double', room_image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300', check_in: '2025-06-10', check_out: '2025-06-13', guests: 2, total: 14850, status: 'confirmed', payment: 'bKash' },
+      { id: 2, room_name: 'Executive Suite', room_type: 'suite', room_image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300', check_in: '2025-07-01', check_out: '2025-07-03', guests: 2, total: 18700, status: 'upcoming', payment: 'Card' },
+      { id: 3, room_name: 'Standard Single Room', room_type: 'single', room_image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=300', check_in: '2025-03-15', check_out: '2025-03-17', guests: 1, total: 5500, status: 'completed', payment: 'Cash' },
+    ];
+
+    const statusColors = {
+      confirmed: 'bg-green-100 text-green-700',
+      upcoming:  'bg-blue-100 text-blue-700',
+      completed: 'bg-gray-100 text-gray-600',
+      cancelled: 'bg-red-100 text-red-600',
+    };
+
+    async function loadDashboard() {
+      // User info
+      document.getElementById('user-name').textContent = demoUser.name;
+      document.getElementById('user-email').textContent = demoUser.email;
+      document.getElementById('nav-username').textContent = demoUser.name.split(' ')[0];
+
+      try {
+        const res = await axios.get('api/booking/my_bookings.php');
+        allBookings = res.data.bookings || demoBookings;
+      } catch {
+        allBookings = demoBookings;
+      }
+
+      document.getElementById('loading').classList.add('hidden');
+      updateStats(allBookings);
+      renderBookings(allBookings);
+    }
+
+    function updateStats(bookings) {
+      document.getElementById('stat-total').textContent = bookings.length;
+      document.getElementById('stat-confirmed').textContent = bookings.filter(b => b.status === 'confirmed').length;
+      document.getElementById('stat-upcoming').textContent = bookings.filter(b => b.status === 'upcoming').length;
+      document.getElementById('stat-completed').textContent = bookings.filter(b => b.status === 'completed').length;
+    }
+
+    function renderBookings(bookings) {
+      const container = document.getElementById('bookings-container');
+      const noBookings = document.getElementById('no-bookings');
+
+      if (bookings.length === 0) {
+        container.innerHTML = '';
+        noBookings.classList.remove('hidden');
+        return;
+      }
+
+      noBookings.classList.add('hidden');
+      container.innerHTML = bookings.map(b => `
+        <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col md:flex-row gap-5 hover:shadow-md transition">
+          <img src="${b.room_image}" alt="${b.room_name}" class="w-full md:w-28 h-24 object-cover rounded-lg flex-shrink-0"/>
+          <div class="flex-1">
+            <div class="flex flex-wrap justify-between items-start gap-2">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800">${b.room_name}</h3>
+                <p class="text-sm text-gray-500 capitalize">${b.room_type} Room • ${b.guests} Guest${b.guests > 1 ? 's' : ''}</p>
+              </div>
+              <span class="text-xs px-3 py-1 rounded-full font-medium capitalize ${statusColors[b.status] || 'bg-gray-100 text-gray-600'}">${b.status}</span>
+            </div>
+            <div class="flex flex-wrap gap-6 mt-3 text-sm text-gray-600">
+              <div>
+                <span class="text-gray-400 text-xs block">Check-in</span>
+                <span class="font-medium">${formatDate(b.check_in)}</span>
+              </div>
+              <div>
+                <span class="text-gray-400 text-xs block">Check-out</span>
+                <span class="font-medium">${formatDate(b.check_out)}</span>
+              </div>
+              <div>
+                <span class="text-gray-400 text-xs block">Payment</span>
+                <span class="font-medium">${b.payment}</span>
+              </div>
+              <div>
+                <span class="text-gray-400 text-xs block">Total</span>
+                <span class="font-bold text-amber-600">৳${b.total.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex md:flex-col gap-2 justify-end">
+            ${b.status !== 'completed' && b.status !== 'cancelled' ?
+              `<button onclick="cancelBooking(${b.id})" class="text-xs border border-red-300 text-red-500 px-3 py-1.5 rounded-lg hover:bg-red-50 transition">Cancel</button>`
+              : ''}
+            <a href="booking.html" class="text-xs border border-amber-400 text-amber-600 px-3 py-1.5 rounded-lg hover:bg-amber-50 transition text-center">Rebook</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterBookings(status) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-600', 'text-white');
+        btn.classList.add('border', 'border-gray-300', 'text-gray-600');
+      });
+      event.target.classList.add('bg-amber-600', 'text-white');
+      event.target.classList.remove('border', 'border-gray-300', 'text-gray-600');
+
+      if (status === 'all') renderBookings(allBookings);
+      else renderBookings(allBookings.filter(b => b.status === status));
+    }
+
+    async function cancelBooking(id) {
+      if (!confirm('Are you sure you want to cancel this booking?')) return;
+      try {
+        await axios.post('api/booking/cancel.php', { id });
+        allBookings = allBookings.map(b => b.id === id ? {...b, status: 'cancelled'} : b);
+        updateStats(allBookings);
+        renderBookings(allBookings);
+      } catch {
+        // Demo mode: just update locally
+        allBookings = allBookings.map(b => b.id === id ? {...b, status: 'cancelled'} : b);
+        updateStats(allBookings);
+        renderBookings(allBookings);
+      }
+    }
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function handleLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        window.location.href = 'login.html';
+      }
+    }
+
+    loadDashboard();
+  </script>
+
+</body>
+</html>

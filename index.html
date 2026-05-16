@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Atithi — Luxury Hotel Booking</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-amber-600">অতিথি <span class="text-gray-500 text-sm font-normal">| Atithi</span></a>
+      <div class="flex gap-6 items-center text-sm font-medium">
+        <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
+        <a href="login.html" class="hover:text-amber-600 transition">Login</a>
+        <a href="register.html" class="bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700 transition">Register</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative bg-cover bg-center h-[85vh] flex items-center justify-center text-center"
+    style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600');">
+    <div class="text-white px-4">
+      <p class="text-amber-400 uppercase tracking-widest text-sm mb-3">Welcome to Atithi</p>
+      <h1 class="text-5xl font-bold mb-4">Experience True Hospitality</h1>
+      <p class="text-gray-300 text-lg mb-8 max-w-xl mx-auto">Book your perfect stay in Bangladesh's finest hotel. Comfort, luxury, and warmth await you.</p>
+      <a href="rooms.html" class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full text-lg transition">Explore Rooms</a>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+    <div class="bg-white p-8 rounded-xl shadow-sm">
+      <div class="text-4xl mb-4">🏨</div>
+      <h3 class="text-xl font-semibold mb-2">Luxury Rooms</h3>
+      <p class="text-gray-500 text-sm">Premium rooms with modern amenities and breathtaking views.</p>
+    </div>
+    <div class="bg-white p-8 rounded-xl shadow-sm">
+      <div class="text-4xl mb-4">🍽️</div>
+      <h3 class="text-xl font-semibold mb-2">Fine Dining</h3>
+      <p class="text-gray-500 text-sm">Experience authentic Bengali cuisine and international dishes.</p>
+    </div>
+    <div class="bg-white p-8 rounded-xl shadow-sm">
+      <div class="text-4xl mb-4">📍</div>
+      <h3 class="text-xl font-semibold mb-2">Prime Location</h3>
+      <p class="text-gray-500 text-sm">Located in the heart of Dhaka, close to all major attractions.</p>
+    </div>
+  </section>
+
+  <!-- ROOMS PREVIEW -->
+  <section class="bg-gray-100 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center mb-2">Our Rooms</h2>
+      <p class="text-center text-gray-500 mb-10">Choose from our wide range of rooms</p>
+      <div id="rooms-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Rooms load হবে JS দিয়ে -->
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
+          <div class="h-48 bg-gray-200"></div>
+          <div class="p-4 space-y-2">
+            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
+          <div class="h-48 bg-gray-200"></div>
+          <div class="p-4 space-y-2">
+            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
+          <div class="h-48 bg-gray-200"></div>
+          <div class="p-4 space-y-2">
+            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-10">
+        <a href="rooms.html" class="border border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white px-6 py-2 rounded-full transition">View All Rooms</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-gray-400 text-center py-8 text-sm">
+    <p class="text-white font-semibold text-lg mb-1">অতিথি | Atithi</p>
+    <p>Mirpur, Dhaka, Bangladesh</p>
+    <p class="mt-2">© 2025 Atithi Hotel. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
