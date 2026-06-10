@@ -1,232 +1,306 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register — Atithi</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="css/style.css"/>
-</head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
-
-  <!-- NAVBAR -->
-  <nav class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-bold text-amber-600">অতিথি <span class="text-gray-500 text-sm font-normal">| Atithi</span></a>
-      <div class="flex gap-6 items-center text-sm font-medium">
-        <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
-        <a href="login.html" class="border border-amber-600 text-amber-600 px-4 py-2 rounded hover:bg-amber-600 hover:text-white transition">Login</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- REGISTER FORM -->
-  <main class="flex-1 flex items-center justify-center px-4 py-16">
-    <div class="w-full max-w-md">
-
-      <!-- Card -->
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-
-        <!-- Header -->
-        <div class="text-center mb-8">
-          <h1 class="text-3xl font-bold text-gray-800">Create Account</h1>
-          <p class="text-gray-500 text-sm mt-2">Join Atithi and book your perfect stay</p>
-        </div>
-
-        <!-- Error Message -->
-        <div id="error-msg" class="hidden bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg mb-6"></div>
-
-        <!-- Success Message -->
-        <div id="success-msg" class="hidden bg-green-50 border border-green-200 text-green-600 text-sm px-4 py-3 rounded-lg mb-6">
-          Account created successfully! Redirecting to login...
-        </div>
-
-        <!-- Form -->
-        <div class="space-y-5">
-
-          <!-- Full Name -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Tarikul Islam"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-            />
-          </div>
-
-          <!-- Email -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="tarikul@email.com"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-            />
-          </div>
-
-          <!-- Phone -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-            <input
-              type="tel"
-              id="phone"
-              placeholder="01XXXXXXXXX"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-            />
-          </div>
-
-          <!-- Password -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <div class="relative">
-              <input
-                type="password"
-                id="password"
-                placeholder="Minimum 6 characters"
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-              />
-              <button onclick="togglePassword('password')" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 text-xs">
-                👁
-              </button>
-            </div>
-          </div>
-
-          <!-- Confirm Password -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
-            <div class="relative">
-              <input
-                type="password"
-                id="confirm-password"
-                placeholder="Re-enter your password"
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-              />
-              <button onclick="togglePassword('confirm-password')" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 text-xs">
-                👁
-              </button>
-            </div>
-          </div>
-
-          <!-- Terms -->
-          <div class="flex items-start gap-2 text-sm text-gray-600">
-            <input type="checkbox" id="terms" class="accent-amber-500 mt-0.5 cursor-pointer"/>
-            <label for="terms" class="cursor-pointer">
-              I agree to the <a href="#" class="text-amber-600 hover:underline">Terms & Conditions</a>
-            </label>
-          </div>
-
-          <!-- Submit Button -->
-          <button
-            onclick="handleRegister()"
-            id="register-btn"
-            class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition text-sm"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register — Atithi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-amber-600"
+          >অতিথি
+          <span class="text-gray-500 text-sm font-normal">| Atithi</span></a
+        >
+        <div class="flex gap-6 items-center text-sm font-medium">
+          <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
+          <a
+            href="login.html"
+            class="border border-amber-600 text-amber-600 px-4 py-2 rounded hover:bg-amber-600 hover:text-white transition"
+            >Login</a
           >
-            Create Account
-          </button>
-
         </div>
-
-        <!-- Divider -->
-        <div class="flex items-center gap-3 my-6">
-          <div class="flex-1 h-px bg-gray-200"></div>
-          <span class="text-gray-400 text-xs">OR</span>
-          <div class="flex-1 h-px bg-gray-200"></div>
-        </div>
-
-        <!-- Login Link -->
-        <p class="text-center text-sm text-gray-600">
-          Already have an account?
-          <a href="login.html" class="text-amber-600 font-semibold hover:underline">Login here</a>
-        </p>
-
       </div>
+    </nav>
 
-      <!-- Back to home -->
-      <p class="text-center text-sm text-gray-400 mt-6">
-        <a href="index.html" class="hover:text-amber-600 transition">← Back to Home</a>
-      </p>
+    <!-- REGISTER FORM -->
+    <main class="flex-1 flex items-center justify-center px-4 py-16">
+      <div class="w-full max-w-md">
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+          <!-- Header -->
+          <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Create Account</h1>
+            <p class="text-gray-500 text-sm mt-2">
+              Join Atithi and book your perfect stay
+            </p>
+          </div>
 
-    </div>
-  </main>
+          <!-- Error Message -->
+          <div
+            id="error-msg"
+            class="hidden bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg mb-6"
+          ></div>
 
-  <!-- FOOTER -->
-  <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
-    <p>© 2025 Atithi Hotel. All rights reserved.</p>
-  </footer>
+          <!-- Success Message -->
+          <div
+            id="success-msg"
+            class="hidden bg-green-50 border border-green-200 text-green-600 text-sm px-4 py-3 rounded-lg mb-6"
+          >
+            Account created successfully! Redirecting to login...
+          </div>
 
-  <script src="js/auth.js"></script>
-  <script>
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === 'password' ? 'text' : 'password';
-    }
+          <!-- Form -->
+          <div class="space-y-5">
+            <!-- Full Name -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Full Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                placeholder="Tarikul Islam"
+                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
+              />
+            </div>
 
-    async function handleRegister() {
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const confirmPassword = document.getElementById('confirm-password').value.trim();
-      const terms = document.getElementById('terms').checked;
-      const errorMsg = document.getElementById('error-msg');
-      const successMsg = document.getElementById('success-msg');
-      const btn = document.getElementById('register-btn');
+            <!-- Email -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                placeholder="tarikul@email.com"
+                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
+              />
+            </div>
 
-      errorMsg.classList.add('hidden');
-      successMsg.classList.add('hidden');
+            <!-- Phone -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                placeholder="01XXXXXXXXX"
+                class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
+              />
+            </div>
 
-      // Validation
-      if (!name || !email || !phone || !password || !confirmPassword) {
-        errorMsg.textContent = 'Please fill in all fields.';
-        errorMsg.classList.remove('hidden');
-        return;
-      }
+            <!-- Password -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Password</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Minimum 6 characters"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
+                />
+                <button
+                  type="button"
+                  onclick="togglePassword('password')"
+                  class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 text-xs"
+                >
+                  👁
+                </button>
+              </div>
+            </div>
 
-      if (password.length < 6) {
-        errorMsg.textContent = 'Password must be at least 6 characters.';
-        errorMsg.classList.remove('hidden');
-        return;
-      }
+            <!-- Confirm Password -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Confirm Password</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  id="confirm-password"
+                  placeholder="Re-enter your password"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
+                />
+                <button
+                  type="button"
+                  onclick="togglePassword('confirm-password')"
+                  class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 text-xs"
+                >
+                  👁
+                </button>
+              </div>
+            </div>
 
-      if (password !== confirmPassword) {
-        errorMsg.textContent = 'Passwords do not match.';
-        errorMsg.classList.remove('hidden');
-        return;
-      }
+            <!-- Terms -->
+            <div class="flex items-start gap-2 text-sm text-gray-600">
+              <input
+                type="checkbox"
+                id="terms"
+                class="accent-amber-500 mt-0.5 cursor-pointer"
+              />
+              <label for="terms" class="cursor-pointer">
+                I agree to the
+                <a href="#" class="text-amber-600 hover:underline"
+                  >Terms & Conditions</a
+                >
+              </label>
+            </div>
 
-      if (!terms) {
-        errorMsg.textContent = 'Please accept the Terms & Conditions.';
-        errorMsg.classList.remove('hidden');
-        return;
-      }
+            <!-- Submit Button -->
+            <button
+              onclick="handleRegister()"
+              id="register-btn"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition text-sm"
+            >
+              Create Account
+            </button>
+          </div>
 
-      btn.textContent = 'Creating account...';
-      btn.disabled = true;
+          <!-- Divider -->
+          <div class="flex items-center gap-3 my-6">
+            <div class="flex-1 h-px bg-gray-200"></div>
+            <span class="text-gray-400 text-xs">OR</span>
+            <div class="flex-1 h-px bg-gray-200"></div>
+          </div>
 
-      try {
-        const res = await axios.post('api/auth/register.php', {
-          name, email, phone, password
-        });
+          <!-- Login Link -->
+          <p class="text-center text-sm text-gray-600">
+            Already have an account?
+            <a
+              href="login.html"
+              class="text-amber-600 font-semibold hover:underline"
+              >Login here</a
+            >
+          </p>
+        </div>
 
-        if (res.data.success) {
-          successMsg.classList.remove('hidden');
-          setTimeout(() => window.location.href = 'login.html', 2000);
-        } else {
-          errorMsg.textContent = res.data.message || 'Registration failed.';
-          errorMsg.classList.remove('hidden');
+        <!-- Back to home -->
+        <p class="text-center text-sm text-gray-400 mt-6">
+          <a href="index.html" class="hover:text-amber-600 transition"
+            >← Back to Home</a
+          >
+        </p>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
+      <p>© 2025 Atithi Hotel. All rights reserved.</p>
+    </footer>
+
+    <script src="js/auth.js"></script>
+
+    <script>
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          handleRegister();
         }
-      } catch (err) {
-        errorMsg.textContent = 'Server error. Please try again.';
-        errorMsg.classList.remove('hidden');
-      } finally {
-        btn.textContent = 'Create Account';
-        btn.disabled = false;
-      }
-    }
-  </script>
+      });
+    </script>
 
-</body>
+    <script>
+      function togglePassword(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+      }
+
+      async function handleRegister() {
+        console.log("Register clicked");
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const confirmPassword = document
+          .getElementById("confirm-password")
+          .value.trim();
+        const terms = document.getElementById("terms").checked;
+        const errorMsg = document.getElementById("error-msg");
+        const successMsg = document.getElementById("success-msg");
+        const btn = document.getElementById("register-btn");
+
+        errorMsg.classList.add("hidden");
+        successMsg.classList.add("hidden");
+
+        // Validation
+        if (!name || !email || !phone || !password || !confirmPassword) {
+          errorMsg.textContent = "Please fill in all fields.";
+          errorMsg.classList.remove("hidden");
+          return;
+        }
+
+        if (password.length < 6) {
+          errorMsg.textContent = "Password must be at least 6 characters.";
+          errorMsg.classList.remove("hidden");
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          errorMsg.textContent = "Passwords do not match.";
+          errorMsg.classList.remove("hidden");
+          return;
+        }
+
+        if (!terms) {
+          errorMsg.textContent = "Please accept the Terms & Conditions.";
+          errorMsg.classList.remove("hidden");
+          return;
+        }
+
+        btn.textContent = "Creating account...";
+        btn.disabled = true;
+
+        try {
+          const res = await axios.post(
+            "api/auth/register.php",
+            {
+              name,
+              email,
+              phone,
+              password,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          if (res.data.success) {
+            console.log(res.data);
+            successMsg.classList.remove("hidden");
+
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 2000);
+          } else {
+            errorMsg.textContent = res.data.message || "Registration failed.";
+            errorMsg.classList.remove("hidden");
+          }
+        } catch (err) {
+          console.error(err);
+
+          if (err.response?.data?.message) {
+            errorMsg.textContent = err.response.data.message;
+          } else {
+            errorMsg.textContent = "Server error. Please try again.";
+          }
+
+          errorMsg.classList.remove("hidden");
+        } finally {
+          btn.textContent = "Create Account";
+          btn.disabled = false;
+        }
+      }
+    </script>
+  </body>
 </html>

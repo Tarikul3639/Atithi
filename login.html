@@ -1,176 +1,214 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login — Atithi</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="css/style.css"/>
-</head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
-
-  <!-- NAVBAR -->
-  <nav class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-bold text-amber-600">অতিথি <span class="text-gray-500 text-sm font-normal">| Atithi</span></a>
-      <div class="flex gap-6 items-center text-sm font-medium">
-        <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
-        <a href="register.html" class="bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700 transition">Register</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Atithi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-amber-600"
+          >অতিথি
+          <span class="text-gray-500 text-sm font-normal">| Atithi</span></a
+        >
+        <div class="flex gap-6 items-center text-sm font-medium">
+          <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
+          <a
+            href="register.html"
+            class="bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700 transition"
+            >Register</a
+          >
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- LOGIN FORM -->
-  <main class="flex-1 flex items-center justify-center px-4 py-16">
-    <div class="w-full max-w-md">
-
-      <!-- Card -->
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-
-        <!-- Header -->
-        <div class="text-center mb-8">
-          <h1 class="text-3xl font-bold text-gray-800">Welcome Back</h1>
-          <p class="text-gray-500 text-sm mt-2">Login to your Atithi account</p>
-        </div>
-
-        <!-- Error Message -->
-        <div id="error-msg" class="hidden bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg mb-6">
-          Invalid email or password.
-        </div>
-
-        <!-- Success Message -->
-        <div id="success-msg" class="hidden bg-green-50 border border-green-200 text-green-600 text-sm px-4 py-3 rounded-lg mb-6">
-          Login successful! Redirecting...
-        </div>
-
-        <!-- Form -->
-        <div class="space-y-5">
-
-          <!-- Email -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="tarikul@email.com"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-            />
+    <!-- LOGIN FORM -->
+    <main class="flex-1 flex items-center justify-center px-4 py-16">
+      <div class="w-full max-w-md">
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+          <!-- Header -->
+          <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Welcome Back</h1>
+            <p class="text-gray-500 text-sm mt-2">
+              Login to your Atithi account
+            </p>
           </div>
 
-          <!-- Password -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <div class="relative">
+          <!-- Error Message -->
+          <div
+            id="error-msg"
+            class="hidden bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg mb-6"
+          >
+            Invalid email or password.
+          </div>
+
+          <!-- Success Message -->
+          <div
+            id="success-msg"
+            class="hidden bg-green-50 border border-green-200 text-green-600 text-sm px-4 py-3 rounded-lg mb-6"
+          >
+            Login successful! Redirecting...
+          </div>
+
+          <!-- Form -->
+          <div class="space-y-5">
+            <!-- Email -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Email Address</label
+              >
               <input
-                type="password"
-                id="password"
-                placeholder="••••••••"
+                type="email"
+                id="email"
+                placeholder="tarikul@email.com"
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
               />
-              <button onclick="togglePassword('password')" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 text-xs">
-                👁
-              </button>
             </div>
+
+            <!-- Password -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Password</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="••••••••"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
+                />
+                <button
+                  onclick="togglePassword('password')"
+                  class="absolute right-3 top-3 text-gray-400 hover:text-gray-600 text-xs"
+                >
+                  👁
+                </button>
+              </div>
+            </div>
+
+            <!-- Remember me -->
+            <div class="flex items-center justify-between text-sm">
+              <label
+                class="flex items-center gap-2 text-gray-600 cursor-pointer"
+              >
+                <input type="checkbox" class="accent-amber-500" /> Remember me
+              </label>
+              <a href="#" class="text-amber-600 hover:underline"
+                >Forgot password?</a
+              >
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              onclick="handleLogin()"
+              id="login-btn"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition text-sm"
+            >
+              Login
+            </button>
           </div>
 
-          <!-- Remember me -->
-          <div class="flex items-center justify-between text-sm">
-            <label class="flex items-center gap-2 text-gray-600 cursor-pointer">
-              <input type="checkbox" class="accent-amber-500"/> Remember me
-            </label>
-            <a href="#" class="text-amber-600 hover:underline">Forgot password?</a>
+          <!-- Divider -->
+          <div class="flex items-center gap-3 my-6">
+            <div class="flex-1 h-px bg-gray-200"></div>
+            <span class="text-gray-400 text-xs">OR</span>
+            <div class="flex-1 h-px bg-gray-200"></div>
           </div>
 
-          <!-- Submit Button -->
-          <button
-            onclick="handleLogin()"
-            id="login-btn"
-            class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition text-sm"
+          <!-- Register Link -->
+          <p class="text-center text-sm text-gray-600">
+            Don't have an account?
+            <a
+              href="register.html"
+              class="text-amber-600 font-semibold hover:underline"
+              >Register here</a
+            >
+          </p>
+        </div>
+
+        <!-- Back to home -->
+        <p class="text-center text-sm text-gray-400 mt-6">
+          <a href="index.html" class="hover:text-amber-600 transition"
+            >← Back to Home</a
           >
-            Login
-          </button>
-
-        </div>
-
-        <!-- Divider -->
-        <div class="flex items-center gap-3 my-6">
-          <div class="flex-1 h-px bg-gray-200"></div>
-          <span class="text-gray-400 text-xs">OR</span>
-          <div class="flex-1 h-px bg-gray-200"></div>
-        </div>
-
-        <!-- Register Link -->
-        <p class="text-center text-sm text-gray-600">
-          Don't have an account?
-          <a href="register.html" class="text-amber-600 font-semibold hover:underline">Register here</a>
         </p>
-
       </div>
+    </main>
 
-      <!-- Back to home -->
-      <p class="text-center text-sm text-gray-400 mt-6">
-        <a href="index.html" class="hover:text-amber-600 transition">← Back to Home</a>
-      </p>
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
+      <p>© 2025 Atithi Hotel. All rights reserved.</p>
+    </footer>
 
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
-    <p>© 2025 Atithi Hotel. All rights reserved.</p>
-  </footer>
-
-  <script src="js/auth.js"></script>
-  <script>
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === 'password' ? 'text' : 'password';
-    }
-
-    async function handleLogin() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const errorMsg = document.getElementById('error-msg');
-      const successMsg = document.getElementById('success-msg');
-      const btn = document.getElementById('login-btn');
-
-      errorMsg.classList.add('hidden');
-      successMsg.classList.add('hidden');
-
-      if (!email || !password) {
-        errorMsg.textContent = 'Please fill in all fields.';
-        errorMsg.classList.remove('hidden');
-        return;
+    <script src="js/auth.js"></script>
+    <script>
+      function togglePassword(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
       }
 
-      btn.textContent = 'Logging in...';
-      btn.disabled = true;
+      async function handleLogin() {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const errorMsg = document.getElementById("error-msg");
+        const successMsg = document.getElementById("success-msg");
+        const btn = document.getElementById("login-btn");
 
-      try {
-        const res = await axios.post('api/auth/login.php', { email, password });
+        errorMsg.classList.add("hidden");
+        successMsg.classList.add("hidden");
 
-        if (res.data.success) {
-          successMsg.classList.remove('hidden');
-          setTimeout(() => window.location.href = 'dashboard.html', 1500);
-        } else {
-          errorMsg.textContent = res.data.message || 'Invalid credentials.';
-          errorMsg.classList.remove('hidden');
+        console.log("Email: ", email, "\nPassword: ", password);
+
+        if (!email || !password) {
+          errorMsg.textContent = "Please fill in all fields.";
+          errorMsg.classList.remove("hidden");
+          return;
         }
-      } catch (err) {
-        errorMsg.textContent = 'Server error. Please try again.';
-        errorMsg.classList.remove('hidden');
-      } finally {
-        btn.textContent = 'Login';
-        btn.disabled = false;
+
+        btn.textContent = "Logging in...";
+        btn.disabled = true;
+
+        try {
+          const res = await axios.post(
+            "api/auth/login.php",
+            { email, password },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            },
+          );
+
+          console.log("Response: ",res);
+
+          if (res.data.success) {
+            successMsg.classList.remove("hidden");
+            setTimeout(() => (window.location.href = "dashboard.html"), 1500);
+          } else {
+            errorMsg.textContent = res.data.message || "Invalid credentials.";
+            errorMsg.classList.remove("hidden");
+          }
+        } catch (err) {
+          errorMsg.textContent = "Server error. Please try again.";
+          errorMsg.classList.remove("hidden");
+        } finally {
+          btn.textContent = "Login";
+          btn.disabled = false;
+        }
       }
-    }
 
-    // Enter key support
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') handleLogin();
-    });
-  </script>
-
-</body>
+      // Enter key support
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleLogin();
+      });
+    </script>
+  </body>
 </html>

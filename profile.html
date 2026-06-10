@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile — Atithi</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+      <a href="index.html" class="text-2xl font-bold text-amber-600">
+        অতিথি
+        <span class="text-gray-500 text-sm font-normal">
+          | Atithi
+        </span>
+      </a>
+
+      <div class="flex gap-6 items-center text-sm font-medium">
+        <a href="rooms.html" class="hover:text-amber-600">Rooms</a>
+        <a href="dashboard.html" class="hover:text-amber-600">My Rooms</a>
+        <a href="profile.html" class="text-amber-600 font-semibold">Profile</a>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- PROFILE -->
+  <main class="flex-1 py-12 px-4">
+
+    <div class="max-w-2xl mx-auto">
+
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+
+        <div class="text-center mb-8">
+
+          <div class="w-24 h-24 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
+            <span class="text-3xl">👤</span>
+          </div>
+
+          <h1 class="text-3xl font-bold text-gray-800">
+            My Profile
+          </h1>
+
+          <p class="text-gray-500 text-sm mt-2">
+            Manage your account information
+          </p>
+
+        </div>
+
+        <!-- ERROR -->
+        <div
+          id="error-msg"
+          class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg mb-6">
+        </div>
+
+        <!-- SUCCESS -->
+        <div
+          id="success-msg"
+          class="hidden bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg mb-6">
+          Profile updated successfully.
+        </div>
+
+        <!-- FORM -->
+        <div class="space-y-5">
+
+          <!-- NAME -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Full Name
+            </label>
+
+            <input
+              type="text"
+              id="name"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400"
+            />
+          </div>
+
+          <!-- EMAIL -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              disabled
+              class="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3"
+            />
+          </div>
+
+          <!-- PHONE -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Phone Number
+            </label>
+
+            <input
+              type="text"
+              id="phone"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400"
+            />
+          </div>
+
+          <!-- MEMBER SINCE -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Member Since
+            </label>
+
+            <input
+              type="text"
+              id="member-since"
+              disabled
+              class="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3"
+            />
+          </div>
+
+          <!-- SAVE BUTTON -->
+          <button
+            onclick="updateProfile()"
+            id="save-btn"
+            class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition">
+
+            Save Changes
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
+    <p>© 2025 Atithi Hotel. All rights reserved.</p>
+  </footer>
+
+  <script>
+
+    async function loadProfile() {
+
+      try {
+
+        const res = await axios.get(
+          'api/auth/profile.php'
+        );
+
+        if (!res.data.success) {
+
+          window.location.href =
+            'login.html';
+
+          return;
+        }
+
+        const user = res.data.user;
+
+        document.getElementById('name').value =
+          user.name || '';
+
+        document.getElementById('email').value =
+          user.email || '';
+
+        document.getElementById('phone').value =
+          user.phone || '';
+
+        document.getElementById('member-since').value =
+          user.created_at
+          ? new Date(user.created_at)
+              .toLocaleDateString()
+          : 'N/A';
+
+      } catch (err) {
+
+        console.error(err);
+
+        document.getElementById(
+          'error-msg'
+        ).textContent =
+          'Failed to load profile.';
+
+        document.getElementById(
+          'error-msg'
+        ).classList.remove('hidden');
+      }
+    }
+
+    async function updateProfile() {
+
+      const name =
+        document.getElementById('name')
+          .value.trim();
+
+      const phone =
+        document.getElementById('phone')
+          .value.trim();
+
+      const btn =
+        document.getElementById('save-btn');
+
+      const error =
+        document.getElementById('error-msg');
+
+      const success =
+        document.getElementById('success-msg');
+
+      error.classList.add('hidden');
+      success.classList.add('hidden');
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+
+        const res = await axios.post(
+          'api/auth/update_profile.php',
+          {
+            name,
+            phone
+          },
+          {
+            headers: {
+              'Content-Type':
+                'application/json'
+            }
+          }
+        );
+
+        if (res.data.success) {
+
+          success.classList.remove(
+            'hidden'
+          );
+
+        } else {
+
+          error.textContent =
+            res.data.message ||
+            'Update failed.';
+
+          error.classList.remove(
+            'hidden'
+          );
+        }
+
+      } catch (err) {
+
+        console.error(err);
+
+        error.textContent =
+          'Server error.';
+
+        error.classList.remove(
+          'hidden'
+        );
+
+      } finally {
+
+        btn.disabled = false;
+        btn.textContent =
+          'Save Changes';
+      }
+    }
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      loadProfile
+    );
+
+  </script>
+
+</body>
+</html>

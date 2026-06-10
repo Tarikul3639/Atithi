@@ -1,0 +1,146 @@
+┌──(root㉿kali)-[/home/tarikul3639/Desktop/Atithi]
+└─# sudo -u postgres psql
+psql (18.3 (Debian 18.3-1+b1))
+Type "help" for help.
+
+postgres=# \l
+                                                     List of databases
+   Name    |  Owner   | Encoding | Locale Provider |   Collate   |    Ctype    | Locale | ICU Rules |   Access privileges   
+-----------+----------+----------+-----------------+-------------+-------------+--------+-----------+-----------------------
+ atithi    | postgres | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |        |           | 
+ postgres  | postgres | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |        |           | 
+ template0 | postgres | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |        |           | =c/postgres          +
+           |          |          |                 |             |             |        |           | postgres=CTc/postgres
+ template1 | postgres | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |        |           | =c/postgres          +
+           |          |          |                 |             |             |        |           | postgres=CTc/postgres
+(4 rows)
+
+postgres=# \c atithi 
+You are now connected to database "atithi" as user "postgres".
+atithi=# \dt
+          List of tables
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ public | users | table | postgres
+(1 row)
+
+atithi=# SELECT * FROM users;
+ id | name | email | password | created_at 
+----+------+-------+----------+------------
+(0 rows)
+
+atithi=# INSERT INTO users (
+    name,
+    email,
+    password
+)
+VALUES (
+    'Tarikul',
+    'tarikul@email.com',
+    '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'
+);
+INSERT 0 1
+atithi=# SELECT id, name, email FROM users;
+ id |  name   |       email       
+----+---------+-------------------
+  1 | Tarikul | tarikul@email.com
+(1 row)
+
+atithi=# SELECT email, password FROM users;
+       email       |                           password                           
+-------------------+--------------------------------------------------------------
+ tarikul@email.com | $2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
+(1 row)
+
+atithi=# UPDATE users
+SET password = '$2y$12$.ucanVPWqJuL/li.Y5lMGuU/cwDuRYkjrM4yLnoVohJuu7rrJ18zu'
+WHERE email = 'tarikul@email.com';
+UPDATE 1
+atithi=# ALTER TABLE users
+ADD COLUMN phone VARCHAR(20);
+ALTER TABLE
+atithi=# 
+atithi=# CREATE TABLE rooms (
+    id SERIAL PRIMARY KEY,
+    type VARCHAR(50) NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
+    capacity INTEGER NOT NULL,
+    description TEXT,
+    image TEXT,
+    status VARCHAR(20) DEFAULT 'available',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE
+atithi=# 
+atithi=# INSERT INTO rooms
+(type, name, price, capacity, description, image)
+VALUES
+(
+'single',
+'Standard Single Room',
+2500,
+1,
+'Cozy single room with all modern amenities, perfect for solo travelers.',
+'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600'
+),
+(
+'double',
+'Deluxe Double Room',
+4500,
+2,
+'Spacious double room with premium furnishings and city view.',
+'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600'
+),
+(
+'suite',
+'Executive Suite',
+8500,
+2,
+'Luxurious suite with separate living area and panoramic views of Dhaka.',
+'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600'
+),
+(
+'deluxe',
+'Royal Deluxe Room',
+6500,
+3,
+'Premium deluxe room with king-size bed and exclusive bathroom.',
+'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600'
+),
+(
+'single',
+'Economy Single',
+1800,
+1,
+'Budget-friendly single room with essential amenities for a comfortable stay.',
+'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=600'
+),
+(
+'suite',
+'Presidential Suite',
+15000,
+4,
+'The ultimate luxury experience with butler service and private terrace.',
+'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600'
+);
+INSERT 0 6
+atithi=# SELECT * FROM rooms;
+atithi=# CREATE TABLE bookings (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    room_id INTEGER REFERENCES rooms(id) ON DELETE CASCADE,
+    guest_name VARCHAR(150) NOT NULL,
+    guest_email VARCHAR(150) NOT NULL,
+    guest_phone VARCHAR(30) NOT NULL,
+    check_in DATE NOT NULL,
+    check_out DATE NOT NULL,
+    guests INTEGER DEFAULT 1,
+    special_requests TEXT,
+    payment_method VARCHAR(30),
+    total_amount NUMERIC(10,2),
+    booking_status VARCHAR(20) DEFAULT 'confirmed',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE
+atithi=# 

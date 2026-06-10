@@ -1,0 +1,10 @@
+sudo apt update
+sudo apt install postgresql postgresql-contrib php-pgsql
+
+sudo systemctl enable postgresql
+sudo systemctl start postgresql
+sudo systemctl status postgresql
+
+2. PostgreSQL Login
+sudo -u postgres psql
+
