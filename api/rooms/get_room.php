@@ -1,49 +1,37 @@
 <?php
-
 header("Content-Type: application/json");
-
 require_once "../config/db.php";
 
-$id = intval($_GET['id'] ?? 0);
+// ❌ VULNERABLE: সরাসরি $_GET['id'] ব্যবহার, কোনো sanitization বা prepared statement নেই
+$id = $_GET['id'] ?? '0';
 
-if(!$id){
-    echo json_encode([
-        "success" => false,
-        "message" => "Room ID required"
-    ]);
-    exit;
-}
+// বিপজ্জনক কোয়েরি – এখানে injection হবে
+$query = "SELECT * FROM rooms WHERE id = $id";
 
-try{
-
-    $stmt = $pdo->prepare(
-        "SELECT * FROM rooms
-         WHERE id = :id"
-    );
-
-    $stmt->execute([
-        ":id" => $id
-    ]);
-
-    $room = $stmt->fetch(PDO::FETCH_ASSOC);
-
+try {
+    $result = $pdo->query($query);
+    $room = $result->fetch(PDO::FETCH_ASSOC);
+    
     if(!$room){
         echo json_encode([
             "success" => false,
-            "message" => "Room not found"
+            "message" => "Room not found",
+            "sql" => $query   // debugging (শিক্ষকের জন্য দেখাবেন)
         ]);
         exit;
     }
-
+    
     echo json_encode([
         "success" => true,
-        "room" => $room
+        "room" => $room,
+        "sql" => $query
     ]);
-
-}catch(PDOException $e){
-
+} catch (PDOException $e) {
+    // error message sqlmap কে কাজ করতে সাহায্য করে
     echo json_encode([
         "success" => false,
-        "message" => $e->getMessage()
+        "error" => $e->getMessage(),
+        "sql" => $query
     ]);
 }
+?>
