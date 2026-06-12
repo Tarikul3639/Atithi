@@ -9,253 +9,77 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body class="bg-gray-50 min-h-screen flex flex-col">
-    <!-- NAVBAR -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-      <div
-        class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center"
-      >
-        <a href="index.html" class="text-2xl font-bold text-amber-600"
-          >অতিথি
-          <span class="text-gray-500 text-sm font-normal">| Atithi</span></a
-        >
-        <div class="flex gap-6 items-center text-sm font-medium">
-          <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
-          <a href="dashboard.html" class="hover:text-amber-600 transition"
-            >Dashboard</a
-          >
-          <a
-            href="login.html"
-            class="border border-amber-600 text-amber-600 px-4 py-2 rounded hover:bg-amber-600 hover:text-white transition"
-            >Login</a
-          >
-        </div>
-      </div>
-    </nav>
+    <div id="navbar" class="min-h-[73px]"></div>
 
-    <!-- PAGE HEADER -->
-    <section class="bg-gray-800 text-white py-14 text-center">
-      <h1 class="text-4xl font-bold mb-2">Book Your Room</h1>
-      <p class="text-gray-400 text-sm">
-        Fill in the details below to complete your reservation
-      </p>
+    <section class="bg-white py-16 border-b border-gray-100">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <h1 class="text-3xl font-serif font-bold text-gray-900 mb-2">Complete Reservation</h1>
+        <p class="text-gray-400 text-[11px] uppercase tracking-widest">Ensure your details to finalize your stay</p>
+      </div>
     </section>
 
-    <!-- BOOKING CONTENT -->
-    <main class="flex-1 max-w-6xl mx-auto px-6 py-12 w-full">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- FORM (left) -->
-        <div class="lg:col-span-2">
-          <div class="bg-white rounded-2xl shadow-sm p-8">
-            <h2 class="text-xl font-bold text-gray-800 mb-6 pb-4 border-b">
-              Booking Details
-            </h2>
+    <main class="flex-1 max-w-5xl mx-auto px-6 py-12 w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        
+        <div class="lg:col-span-2 space-y-8">
+          <div class="bg-white p-8 border border-gray-100 shadow-sm">
+            <h2 class="text-lg font-serif font-bold text-gray-900 mb-8">Guest Information</h2>
+            
+            <div id="error-msg" class="hidden bg-red-50 text-red-600 text-xs px-4 py-3 mb-6 border-l-4 border-red-600"></div>
+            <div id="success-msg" class="hidden bg-green-50 text-green-600 text-xs px-4 py-3 mb-6 border-l-4 border-green-600"></div>
 
-            <!-- Error / Success -->
-            <div
-              id="error-msg"
-              class="hidden bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg mb-6"
-            ></div>
-            <div
-              id="success-msg"
-              class="hidden bg-green-50 border border-green-200 text-green-600 text-sm px-4 py-3 rounded-lg mb-6"
-            >
-              🎉 Booking confirmed! Redirecting to dashboard...
-            </div>
-
-            <div class="space-y-5">
-              <!-- Guest Name -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >Guest Name</label
-                >
-                <input
-                  type="text"
-                  id="guest-name"
-                  placeholder="Your full name"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-                />
-              </div>
-
-              <!-- Email -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >Email Address</label
-                >
-                <input
-                  type="email"
-                  id="guest-email"
-                  placeholder="your@email.com"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-                />
-              </div>
-
-              <!-- Phone -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >Phone Number</label
-                >
-                <input
-                  type="tel"
-                  id="guest-phone"
-                  placeholder="01XXXXXXXXX"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-                />
-              </div>
-
-              <!-- Check-in / Check-out -->
-              <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-6">
+              <div class="grid grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Check-in Date</label
-                  >
-                  <input
-                    type="date"
-                    id="check-in"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-                  />
+                  <label class="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">Guest Name</label>
+                  <input type="text" id="guest-name" placeholder="Enter your name" class="w-full border-b border-l pl-2 border-gray-200 py-2 text-sm focus:border-amber-600 focus:outline-none transition-colors" />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1"
-                    >Check-out Date</label
-                  >
-                  <input
-                    type="date"
-                    id="check-out"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-                  />
+                  <label class="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">Phone</label>
+                  <input type="tel" id="guest-phone" placeholder="Enter your phone number" class="w-full border-b border-l pl-2 border-gray-200 py-2 text-sm focus:border-amber-600 focus:outline-none transition-colors" />
                 </div>
               </div>
 
-              <!-- Guests -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >Number of Guests</label
-                >
-                <select
-                  id="guests"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
-                >
-                  <option value="1">1 Guest</option>
-                  <option value="2">2 Guests</option>
-                  <option value="3">3 Guests</option>
-                  <option value="4">4 Guests</option>
-                </select>
+                <label class="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">Email Address</label>
+                <input type="email" id="guest-email" placeholder="Enter your email address" class="w-full border-b border-l pl-2 border-gray-200 py-2 text-sm focus:border-amber-600 focus:outline-none transition-colors" />
               </div>
 
-              <!-- Special Requests -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >Special Requests
-                  <span class="text-gray-400">(optional)</span></label
-                >
-                <textarea
-                  id="special-requests"
-                  rows="3"
-                  placeholder="Any special requests or preferences..."
-                  class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 transition resize-none"
-                ></textarea>
-              </div>
-
-              <!-- Payment Method -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-3"
-                  >Payment Method</label
-                >
-                <div class="grid grid-cols-3 gap-3">
-                  <label
-                    class="payment-option border-2 border-amber-500 rounded-lg p-3 text-center cursor-pointer text-sm font-medium text-amber-600"
-                  >
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="cash"
-                      class="hidden"
-                      checked
-                    />
-                    💵 Cash
-                  </label>
-                  <label
-                    class="payment-option border-2 border-gray-200 rounded-lg p-3 text-center cursor-pointer text-sm font-medium text-gray-600 hover:border-amber-400 transition"
-                  >
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="bkash"
-                      class="hidden"
-                    />
-                    📱 bKash
-                  </label>
-                  <label
-                    class="payment-option border-2 border-gray-200 rounded-lg p-3 text-center cursor-pointer text-sm font-medium text-gray-600 hover:border-amber-400 transition"
-                  >
-                    <input
-                      type="radio"
-                      name="payment"
-                      value="card"
-                      class="hidden"
-                    />
-                    💳 Card
-                  </label>
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">Check-in</label>
+                  <input type="date" id="check-in" class="w-full border-b border-l pl-2 border-gray-200 py-2 text-sm focus:border-amber-600 focus:outline-none transition-colors" />
+                </div>
+                <div>
+                  <label class="block text-[10px] uppercase tracking-widest text-gray-500 mb-2">Check-out</label>
+                  <input type="date" id="check-out" class="w-full border-b border-l pl-2 border-gray-200 py-2 text-sm focus:border-amber-600 focus:outline-none transition-colors" />
                 </div>
               </div>
 
-              <!-- Submit -->
-              <button
-                onclick="handleBooking()"
-                id="book-btn"
-                class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 rounded-lg transition text-sm mt-2"
-              >
-                Confirm Booking
+              <button onclick="handleBooking()" id="book-btn" class="w-full bg-gray-900 hover:bg-amber-600 text-white py-4 text-[11px] font-bold uppercase tracking-[0.2em] transition-all">
+                Confirm Reservation
               </button>
             </div>
           </div>
         </div>
 
-        <!-- ROOM SUMMARY (right) -->
         <div class="lg:col-span-1">
-          <div
-            class="bg-white rounded-2xl shadow-sm overflow-hidden sticky top-24"
-          >
-            <img
-              id="room-image"
-              src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600"
-              alt="Room"
-              class="w-full h-48 object-cover"
-            />
+          <div class="bg-white border border-gray-100 shadow-sm sticky top-24">
+            <img id="room-image" src="" alt="Room" class="w-full h-48 object-cover bg-gray-100" />
             <div class="p-6">
-              <span
-                id="room-type"
-                class="bg-amber-100 text-amber-700 text-xs px-3 py-1 rounded-full capitalize"
-                >Double</span
-              >
-              <h3
-                id="room-name"
-                class="text-lg font-bold text-gray-800 mt-3 mb-1"
-              >
-                Deluxe Double Room
-              </h3>
-              <p id="room-desc" class="text-sm text-gray-500 mb-4">
-                Spacious double room with premium furnishings and city view.
-              </p>
-
-              <div class="border-t pt-4 space-y-3 text-sm">
-                <div class="flex justify-between text-gray-600">
-                  <span>Room/night</span>
-                  <span id="price-per-night" class="font-medium">৳4,500</span>
-                </div>
-                <div class="flex justify-between text-gray-600">
-                  <span>Nights</span>
-                  <span id="total-nights" class="font-medium">—</span>
-                </div>
-                <div class="flex justify-between text-gray-600">
-                  <span>Tax (10%)</span>
-                  <span id="tax-amount" class="font-medium">—</span>
-                </div>
-                <div
-                  class="flex justify-between text-gray-800 font-bold text-base border-t pt-3"
-                >
-                  <span>Total</span>
-                  <span id="total-amount" class="text-amber-600">—</span>
+              <h3 id="room-name" class="font-bold text-gray-900 mb-1">...</h3>
+              <p class="text-[11px] uppercase text-gray-400 tracking-widest mb-6" id="room-type">...</p>
+              
+              <div class="flex gap-4 mb-4">
+                <span id="room-status" class="text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded">...</span>
+                <span id="room-capacity" class="text-[9px] font-bold uppercase tracking-widest px-2 py-1 bg-gray-100 text-gray-600 rounded">...</span>
+              </div>
+              
+              <div class="space-y-3 text-[12px] text-gray-600 border-t border-gray-100 pt-4">
+                <div class="flex justify-between"><span>Nightly Rate</span> <span id="price-per-night">৳0</span></div>
+                <div class="flex justify-between"><span>Total Nights</span> <span id="total-nights">-</span></div>
+                <div class="flex justify-between font-bold text-gray-900 pt-2 border-t border-gray-100">
+                  <span>Grand Total</span> <span id="total-amount" class="text-amber-600">৳0</span>
                 </div>
               </div>
             </div>
@@ -264,154 +88,10 @@
       </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
-      <p>© 2025 Atithi Hotel. All rights reserved.</p>
-    </footer>
+    <div id="footer"></div>
 
+    <script src="js/include.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/booking.js"></script>
-    <script>
-      // URL থেকে room_id নাও
-      const params = new URLSearchParams(window.location.search);
-      const roomId = params.get("room_id") || 2;
-
-      // Room info load
-      async function loadRoom() {
-        try {
-          const res = await axios.get(`api/rooms/get_room.php?id=${roomId}`);
-
-          if (res.data.success && res.data.room) {
-            updateRoomUI(res.data.room);
-          }
-        } catch (err) {
-          console.error(err);
-
-          document.getElementById("error-msg").textContent =
-            "Failed to load room details.";
-
-          document.getElementById("error-msg").classList.remove("hidden");
-        }
-      }
-
-      function updateRoomUI(room) {
-        document.getElementById("room-image").src = room.image;
-        document.getElementById("room-name").textContent = room.name;
-        document.getElementById("room-type").textContent = room.type;
-        document.getElementById("room-desc").textContent = room.description;
-        document.getElementById("price-per-night").textContent =
-          `৳${Number(room.price).toLocaleString()}`;
-
-        window.roomPrice = Number(room.price);
-      }
-
-      // Date change এ total calculate করো
-      function calculateTotal() {
-        const checkIn = new Date(document.getElementById("check-in").value);
-        const checkOut = new Date(document.getElementById("check-out").value);
-        if (!checkIn || !checkOut || checkOut <= checkIn) return;
-
-        const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-        const subtotal = nights * (window.roomPrice || 4500);
-        const tax = subtotal * 0.1;
-        const total = subtotal + tax;
-
-        document.getElementById("total-nights").textContent =
-          `${nights} night${nights > 1 ? "s" : ""}`;
-        document.getElementById("tax-amount").textContent =
-          `৳${tax.toLocaleString()}`;
-        document.getElementById("total-amount").textContent =
-          `৳${total.toLocaleString()}`;
-      }
-
-      document
-        .getElementById("check-in")
-        .addEventListener("change", calculateTotal);
-      document
-        .getElementById("check-out")
-        .addEventListener("change", calculateTotal);
-
-      // Set min date = today
-      const today = new Date().toISOString().split("T")[0];
-      document.getElementById("check-in").min = today;
-      document.getElementById("check-out").min = today;
-
-      // Payment option select
-      document.querySelectorAll(".payment-option").forEach((label) => {
-        label.addEventListener("click", () => {
-          document.querySelectorAll(".payment-option").forEach((l) => {
-            l.classList.remove("border-amber-500", "text-amber-600");
-            l.classList.add("border-gray-200", "text-gray-600");
-          });
-          label.classList.add("border-amber-500", "text-amber-600");
-          label.classList.remove("border-gray-200", "text-gray-600");
-        });
-      });
-
-      async function handleBooking() {
-        const name = document.getElementById("guest-name").value.trim();
-        const email = document.getElementById("guest-email").value.trim();
-        const phone = document.getElementById("guest-phone").value.trim();
-        const checkIn = document.getElementById("check-in").value;
-        const checkOut = document.getElementById("check-out").value;
-        const guests = document.getElementById("guests").value;
-        const special = document
-          .getElementById("special-requests")
-          .value.trim();
-        const payment = document.querySelector(
-          'input[name="payment"]:checked',
-        ).value;
-        const errorMsg = document.getElementById("error-msg");
-        const successMsg = document.getElementById("success-msg");
-        const btn = document.getElementById("book-btn");
-
-        errorMsg.classList.add("hidden");
-        successMsg.classList.add("hidden");
-
-        if (!name || !email || !phone || !checkIn || !checkOut) {
-          errorMsg.textContent = "Please fill in all required fields.";
-          errorMsg.classList.remove("hidden");
-          return;
-        }
-
-        if (new Date(checkOut) <= new Date(checkIn)) {
-          errorMsg.textContent = "Check-out date must be after check-in date.";
-          errorMsg.classList.remove("hidden");
-          return;
-        }
-
-        btn.textContent = "Processing...";
-        btn.disabled = true;
-
-        try {
-          const res = await axios.post("api/booking/create.php", {
-            room_id: roomId,
-            name,
-            email,
-            phone,
-            check_in: checkIn,
-            check_out: checkOut,
-            guests,
-            special_requests: special,
-            payment_method: payment,
-          });
-
-          if (res.data.success) {
-            successMsg.classList.remove("hidden");
-            setTimeout(() => (window.location.href = "dashboard.html"), 2000);
-          } else {
-            errorMsg.textContent = res.data.message || "Booking failed.";
-            errorMsg.classList.remove("hidden");
-          }
-        } catch {
-          errorMsg.textContent = "Server error. Please try again.";
-          errorMsg.classList.remove("hidden");
-        } finally {
-          btn.textContent = "Confirm Booking";
-          btn.disabled = false;
-        }
-      }
-
-      loadRoom();
-    </script>
   </body>
 </html>

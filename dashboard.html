@@ -7,315 +7,64 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .tab-btn { transition: all 0.3s ease; }
+      .active-tab { background-color: #d97706; color: white; border-color: #d97706; }
+    </style>
   </head>
-  <body class="bg-gray-50 min-h-screen flex flex-col">
-    <!-- NAVBAR -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="index.html" class="text-2xl font-bold text-amber-600">অতিথি <span class="text-gray-500 text-sm font-normal">| Atithi</span></a>
-        <div class="flex gap-6 items-center text-sm font-medium">
-          <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
-          <a href="profile.html" class="hover:text-amber-600 transition">Profile</a>
-          <span class="text-gray-600">👤 <span id="nav-username">Guest</span></span>
-          <button
-            onclick="handleLogout()"
-            class="border border-red-400 text-red-500 px-4 py-2 rounded hover:bg-red-500 hover:text-white transition"
-          >
-            Logout
-          </button>
-        </div>
-      </div>
-    </nav>
+  <body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+    
+    <div id="navbar" class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100"></div>
 
-    <!-- PAGE HEADER -->
-    <section class="bg-gray-800 text-white py-14 px-6">
+    <section class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-16 px-6">
       <div class="max-w-7xl mx-auto">
-        <p class="text-amber-400 text-sm mb-1">Welcome back,</p>
-        <h1 class="text-4xl font-bold" id="user-name">Guest</h1>
-        <p class="text-gray-400 text-sm mt-1" id="user-email">guest@email.com</p>
+        <p class="text-amber-400 text-xs font-semibold uppercase tracking-widest mb-2">Welcome back</p>
+        <h1 class="text-4xl font-serif font-bold" id="user-name">Guest</h1>
+        <p class="text-gray-400 text-sm mt-2" id="user-email">guest@email.com</p>
       </div>
     </section>
 
-    <!-- STATS -->
-    <div class="bg-white border-b shadow-sm">
-      <div class="max-w-7xl mx-auto px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div class="text-center">
-          <p class="text-3xl font-bold text-amber-600" id="stat-total">0</p>
-          <p class="text-gray-500 text-sm mt-1">Total Bookings</p>
-        </div>
-        <div class="text-center">
-          <p class="text-3xl font-bold text-green-500" id="stat-confirmed">0</p>
-          <p class="text-gray-500 text-sm mt-1">Confirmed</p>
-        </div>
-        <div class="text-center">
-          <p class="text-3xl font-bold text-blue-500" id="stat-upcoming">0</p>
-          <p class="text-gray-500 text-sm mt-1">Upcoming</p>
-        </div>
-        <div class="text-center">
-          <p class="text-3xl font-bold text-gray-500" id="stat-completed">0</p>
-          <p class="text-gray-500 text-sm mt-1">Completed</p>
-        </div>
+    <div class="bg-white border-b border-gray-100">
+      <div class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center group"><p class="text-4xl font-bold text-amber-600 group-hover:scale-110 transition-transform" id="stat-total">0</p><p class="text-gray-400 text-[10px] uppercase tracking-widest mt-2">Total Bookings</p></div>
+        <div class="text-center group"><p class="text-4xl font-bold text-green-600 group-hover:scale-110 transition-transform" id="stat-confirmed">0</p><p class="text-gray-400 text-[10px] uppercase tracking-widest mt-2">Confirmed</p></div>
+        <div class="text-center group"><p class="text-4xl font-bold text-blue-600 group-hover:scale-110 transition-transform" id="stat-upcoming">0</p><p class="text-gray-400 text-[10px] uppercase tracking-widest mt-2">Upcoming</p></div>
+        <div class="text-center group"><p class="text-4xl font-bold text-gray-800 group-hover:scale-110 transition-transform" id="stat-completed">0</p><p class="text-gray-400 text-[10px] uppercase tracking-widest mt-2">Completed</p></div>
       </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 max-w-7xl mx-auto px-6 py-10 w-full">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">My Bookings</h2>
-        <a
-          href="rooms.html"
-          class="bg-amber-600 hover:bg-amber-700 text-white text-sm px-5 py-2 rounded-lg transition"
-        >
+    <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-xl font-serif font-bold text-gray-900">My Bookings</h2>
+        <a href="rooms.html" class="bg-gray-900 hover:bg-amber-600 text-white text-[11px] font-bold uppercase tracking-[0.2em] px-6 py-3 transition-all">
           + New Booking
         </a>
       </div>
 
-      <!-- Filter Tabs -->
-      <div class="flex gap-2 mb-6 flex-wrap">
-        <button onclick="filterBookings(event, 'all')" class="tab-btn active-tab px-4 py-2 rounded-full text-sm bg-amber-600 text-white">All</button>
-        <button onclick="filterBookings(event, 'confirmed')" class="tab-btn px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-500 transition">Confirmed</button>
-        <button onclick="filterBookings(event, 'upcoming')" class="tab-btn px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-500 transition">Upcoming</button>
-        <button onclick="filterBookings(event, 'completed')" class="tab-btn px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-500 transition">Completed</button>
-        <button onclick="filterBookings(event, 'cancelled')" class="tab-btn px-4 py-2 rounded-full text-sm border border-gray-300 text-gray-600 hover:border-amber-500 transition">Cancelled</button>
+      <div class="flex gap-3 mb-8 flex-wrap" id="filter-tabs">
+        <button onclick="filterBookings(event, 'all')" class="tab-btn active-tab px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border border-transparent">All</button>
+        <button onclick="filterBookings(event, 'confirmed')" class="tab-btn px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border border-gray-200 text-gray-600 hover:border-amber-500">Confirmed</button>
+        <button onclick="filterBookings(event, 'upcoming')" class="tab-btn px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border border-gray-200 text-gray-600 hover:border-amber-500">Upcoming</button>
+        <button onclick="filterBookings(event, 'completed')" class="tab-btn px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border border-gray-200 text-gray-600 hover:border-amber-500">Completed</button>
+        <button onclick="filterBookings(event, 'cancelled')" class="tab-btn px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border border-gray-200 text-gray-600 hover:border-amber-500">Cancelled</button>
       </div>
 
-      <!-- Bookings List -->
       <div id="bookings-container" class="space-y-4"></div>
-
-      <!-- Loading -->
       <div id="loading" class="space-y-4">
-        <div class="bg-white rounded-xl p-6 shadow-sm animate-pulse flex gap-4">
-          <div class="w-24 h-20 bg-gray-200 rounded-lg flex-shrink-0"></div>
-          <div class="flex-1 space-y-2">
-            <div class="h-4 bg-gray-200 rounded w-1/3"></div>
-            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
-            <div class="h-3 bg-gray-200 rounded w-1/4"></div>
-          </div>
-        </div>
-        <div class="bg-white rounded-xl p-6 shadow-sm animate-pulse flex gap-4">
-          <div class="w-24 h-20 bg-gray-200 rounded-lg flex-shrink-0"></div>
-          <div class="flex-1 space-y-2">
-            <div class="h-4 bg-gray-200 rounded w-1/3"></div>
-            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
-            <div class="h-3 bg-gray-200 rounded w-1/4"></div>
-          </div>
-        </div>
+        <!-- Skeleton Loaders -->
+        <div class="h-32 bg-white rounded border border-gray-100 animate-pulse"></div>
       </div>
-
-      <div id="no-bookings" class="hidden text-center py-20">
-        <p class="text-6xl mb-4">🛏</p>
-        <p class="text-gray-500 text-lg mb-4">No bookings found.</p>
-        <a
-          href="rooms.html"
-          class="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition text-sm"
-        >
-          Browse Rooms
-        </a>
+      <div id="no-bookings" class="hidden text-center py-24">
+        <p class="text-4xl mb-4">🛏</p>
+        <p class="text-gray-400 text-sm">No reservations found.</p>
       </div>
-
-      <div id="error-box" class="hidden text-center py-10 text-red-600"></div>
+      <div id="error-box" class="hidden text-center py-10 text-red-600 text-sm"></div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-gray-800 text-gray-400 text-center py-6 text-sm">
-      <p>© 2025 Atithi Hotel. All rights reserved.</p>
-    </footer>
+    <div id="footer"></div>
 
-    <script>
-      let allBookings = [];
-
-      const statusColors = {
-        confirmed: "bg-green-100 text-green-700",
-        upcoming: "bg-blue-100 text-blue-700",
-        completed: "bg-gray-100 text-gray-600",
-        cancelled: "bg-red-100 text-red-600",
-      };
-
-      function formatDate(dateStr) {
-        if (!dateStr) return "—";
-        const d = new Date(dateStr + "T00:00:00");
-        return d.toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        });
-      }
-
-      async function loadDashboard() {
-        const loading = document.getElementById("loading");
-        const noBookings = document.getElementById("no-bookings");
-        const errorBox = document.getElementById("error-box");
-
-        loading.classList.remove("hidden");
-        noBookings.classList.add("hidden");
-        errorBox.classList.add("hidden");
-
-        try {
-          const profileRes = await axios.get("api/auth/profile.php");
-          if (!profileRes.data.success) {
-            window.location.href = "login.html";
-            return;
-          }
-
-          const user = profileRes.data.user || {};
-          const userNameEl = document.getElementById("user-name");
-          const userEmailEl = document.getElementById("user-email");
-          const navUsernameEl = document.getElementById("nav-username");
-
-          if (userNameEl) userNameEl.textContent = user.name || "Guest";
-          if (userEmailEl) userEmailEl.textContent = user.email || "";
-          if (navUsernameEl) navUsernameEl.textContent = (user.name || "Guest").split(" ")[0];
-
-          const bookingRes = await axios.get("api/booking/my_bookings.php");
-
-          if (bookingRes.data.success && Array.isArray(bookingRes.data.bookings)) {
-            allBookings = bookingRes.data.bookings;
-          } else {
-            allBookings = [];
-          }
-
-          updateStats(allBookings);
-          renderBookings(allBookings);
-        } catch (err) {
-          console.error(err);
-          errorBox.textContent = "Failed to load dashboard data.";
-          errorBox.classList.remove("hidden");
-          allBookings = [];
-          updateStats(allBookings);
-          renderBookings(allBookings);
-        } finally {
-          loading.classList.add("hidden");
-        }
-      }
-
-      function updateStats(bookings) {
-        const total = document.getElementById("stat-total");
-        const confirmed = document.getElementById("stat-confirmed");
-        const upcoming = document.getElementById("stat-upcoming");
-        const completed = document.getElementById("stat-completed");
-
-        if (total) total.textContent = bookings.length;
-        if (confirmed) confirmed.textContent = bookings.filter(b => b.status === "confirmed").length;
-        if (upcoming) upcoming.textContent = bookings.filter(b => b.status === "upcoming").length;
-        if (completed) completed.textContent = bookings.filter(b => b.status === "completed").length;
-      }
-
-      function renderBookings(bookings) {
-        const container = document.getElementById("bookings-container");
-        const noBookings = document.getElementById("no-bookings");
-        if (!container || !noBookings) return;
-
-        if (!bookings || bookings.length === 0) {
-          container.innerHTML = "";
-          noBookings.classList.remove("hidden");
-          return;
-        }
-
-        noBookings.classList.add("hidden");
-
-        container.innerHTML = bookings.map((b) => `
-          <div class="bg-white rounded-xl shadow-sm p-5 flex flex-col md:flex-row gap-5 hover:shadow-md transition">
-            <img
-              src="${b.room_image || 'assets/images/rooms/default.jpg'}"
-              alt="${b.room_name || 'Room'}"
-              class="w-full md:w-28 h-24 object-cover rounded-lg flex-shrink-0"
-              onerror="this.src='assets/images/rooms/default.jpg'"
-            />
-            <div class="flex-1">
-              <div class="flex flex-wrap justify-between items-start gap-2">
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-800">${b.room_name || "Untitled Room"}</h3>
-                  <p class="text-sm text-gray-500 capitalize">${b.room_type || ""} Room • ${b.guests || 1} Guest${Number(b.guests) > 1 ? "s" : ""}</p>
-                </div>
-                <span class="text-xs px-3 py-1 rounded-full font-medium capitalize ${statusColors[b.status] || "bg-gray-100 text-gray-600"}">
-                  ${b.status || "confirmed"}
-                </span>
-              </div>
-
-              <div class="flex flex-wrap gap-6 mt-3 text-sm text-gray-600">
-                <div>
-                  <span class="text-gray-400 text-xs block">Check-in</span>
-                  <span class="font-medium">${formatDate(b.check_in)}</span>
-                </div>
-                <div>
-                  <span class="text-gray-400 text-xs block">Check-out</span>
-                  <span class="font-medium">${formatDate(b.check_out)}</span>
-                </div>
-                <div>
-                  <span class="text-gray-400 text-xs block">Payment</span>
-                  <span class="font-medium">${b.payment || "Cash"}</span>
-                </div>
-                <div>
-                  <span class="text-gray-400 text-xs block">Total</span>
-                  <span class="font-bold text-amber-600">৳${Number(b.total || 0).toLocaleString()}</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="flex md:flex-col gap-2 justify-end">
-              ${
-                b.status !== "completed" && b.status !== "cancelled"
-                  ? `<button onclick="cancelBooking(${b.id})" class="text-xs border border-red-300 text-red-500 px-3 py-1.5 rounded-lg hover:bg-red-50 transition">Cancel</button>`
-                  : ""
-              }
-              <a href="booking.html?room_id=${b.room_id}" class="text-xs border border-amber-400 text-amber-600 px-3 py-1.5 rounded-lg hover:bg-amber-50 transition text-center">Rebook</a>
-            </div>
-          </div>
-        `).join("");
-      }
-
-      function filterBookings(event, status) {
-        document.querySelectorAll(".tab-btn").forEach((btn) => {
-          btn.classList.remove("bg-amber-600", "text-white", "border", "border-gray-300");
-          btn.classList.add("border", "border-gray-300", "text-gray-600");
-        });
-
-        event.target.classList.add("bg-amber-600", "text-white");
-        event.target.classList.remove("border", "border-gray-300", "text-gray-600");
-
-        if (status === "all") {
-          renderBookings(allBookings);
-        } else {
-          renderBookings(allBookings.filter((b) => b.status === status));
-        }
-      }
-
-      async function cancelBooking(id) {
-        if (!confirm("Are you sure you want to cancel this booking?")) return;
-
-        try {
-          const res = await axios.post(
-            "api/booking/cancel.php",
-            { id },
-            { headers: { "Content-Type": "application/json" } }
-          );
-
-          if (res.data.success) {
-            allBookings = allBookings.map((b) =>
-              b.id === id ? { ...b, status: "cancelled" } : b
-            );
-            updateStats(allBookings);
-            renderBookings(allBookings);
-          } else {
-            alert(res.data.message || "Cancel failed.");
-          }
-        } catch (err) {
-          console.error(err);
-          alert("Server error while cancelling booking.");
-        }
-      }
-
-      async function handleLogout() {
-        try {
-          await axios.get("api/auth/logout.php");
-        } catch (err) {
-          console.error(err);
-        } finally {
-          window.location.href = "login.html";
-        }
-      }
-
-      document.addEventListener("DOMContentLoaded", loadDashboard);
-    </script>
+    <script src="js/include.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
   </body>
 </html>

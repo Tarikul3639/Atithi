@@ -1,99 +1,214 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Atithi — Luxury Hotel Booking</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="css/style.css"/>
-</head>
-<body class="bg-gray-50 text-gray-800">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atithi — Luxury Hotel Booking</title>
 
-  <!-- NAVBAR -->
-  <nav class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-bold text-amber-600">অতিথি <span class="text-gray-500 text-sm font-normal">| Atithi</span></a>
-      <div class="flex gap-6 items-center text-sm font-medium">
-        <a href="rooms.html" class="hover:text-amber-600 transition">Rooms</a>
-        <a href="login.html" class="hover:text-amber-600 transition">Login</a>
-        <a href="register.html" class="bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700 transition">Register</a>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body class="bg-gray-50 text-gray-800">
+    <!-- NAVBAR LOAD -->
+    <div id="navbar" class="sticky top-0 z-50"></div>
+
+    <!-- HERO -->
+    <section
+      class="relative bg-cover bg-center h-[85vh] flex items-center justify-center text-center"
+      style="
+        background-image:
+          linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+          url(&quot;https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&quot;);
+      "
+    >
+      <div class="text-white px-4">
+        <p class="text-amber-400 uppercase tracking-widest text-sm mb-3">
+          Welcome to Atithi
+        </p>
+        <h1 class="text-5xl font-bold mb-4">Experience True Hospitality</h1>
+        <p class="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
+          Book your perfect stay in Bangladesh's finest hotel.
+        </p>
+        <a
+          href="rooms.html"
+          class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded text-lg transition"
+        >
+          Explore Rooms
+        </a>
       </div>
-    </div>
-  </nav>
+    </section>
 
-  <!-- HERO -->
-  <section class="relative bg-cover bg-center h-[85vh] flex items-center justify-center text-center"
-    style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600');">
-    <div class="text-white px-4">
-      <p class="text-amber-400 uppercase tracking-widest text-sm mb-3">Welcome to Atithi</p>
-      <h1 class="text-5xl font-bold mb-4">Experience True Hospitality</h1>
-      <p class="text-gray-300 text-lg mb-8 max-w-xl mx-auto">Book your perfect stay in Bangladesh's finest hotel. Comfort, luxury, and warmth await you.</p>
-      <a href="rooms.html" class="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-full text-lg transition">Explore Rooms</a>
-    </div>
-  </section>
+    <!-- FEATURES SECTION -->
+    <section class="max-w-7xl mx-auto px-6 py-24">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Feature 1 -->
+        <div class="group text-center">
+          <div
+            class="inline-block p-4 mb-6 border border-gray-100 bg-gray-50 group-hover:border-amber-600 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8 text-amber-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
+            </svg>
+          </div>
+          <h3
+            class="text-lg font-bold text-gray-900 uppercase tracking-widest mb-3"
+          >
+            Luxury Suites
+          </h3>
+          <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
+            Designed for discerning travelers who value comfort, style, and
+            bespoke amenities.
+          </p>
+        </div>
 
-  <!-- FEATURES -->
-  <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-    <div class="bg-white p-8 rounded-xl shadow-sm">
-      <div class="text-4xl mb-4">🏨</div>
-      <h3 class="text-xl font-semibold mb-2">Luxury Rooms</h3>
-      <p class="text-gray-500 text-sm">Premium rooms with modern amenities and breathtaking views.</p>
-    </div>
-    <div class="bg-white p-8 rounded-xl shadow-sm">
-      <div class="text-4xl mb-4">🍽️</div>
-      <h3 class="text-xl font-semibold mb-2">Fine Dining</h3>
-      <p class="text-gray-500 text-sm">Experience authentic Bengali cuisine and international dishes.</p>
-    </div>
-    <div class="bg-white p-8 rounded-xl shadow-sm">
-      <div class="text-4xl mb-4">📍</div>
-      <h3 class="text-xl font-semibold mb-2">Prime Location</h3>
-      <p class="text-gray-500 text-sm">Located in the heart of Dhaka, close to all major attractions.</p>
-    </div>
-  </section>
+        <!-- Feature 2 -->
+        <div class="group text-center">
+          <div
+            class="inline-block p-4 mb-6 border border-gray-100 bg-gray-50 group-hover:border-amber-600 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8 text-amber-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M12 6.252v13m3-3.514l-3 3.514-3-3.514M5.07 11.514l7 7 7-7"
+              />
+            </svg>
+          </div>
+          <h3
+            class="text-lg font-bold text-gray-900 uppercase tracking-widest mb-3"
+          >
+            Fine Dining
+          </h3>
+          <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
+            An exquisite culinary journey featuring authentic local and
+            international flavors.
+          </p>
+        </div>
 
-  <!-- ROOMS PREVIEW -->
-  <section class="bg-gray-100 py-16">
-    <div class="max-w-7xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center mb-2">Our Rooms</h2>
-      <p class="text-center text-gray-500 mb-10">Choose from our wide range of rooms</p>
-      <div id="rooms-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Rooms load হবে JS দিয়ে -->
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
-          <div class="h-48 bg-gray-200"></div>
-          <div class="p-4 space-y-2">
-            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+        <!-- Feature 3 -->
+        <div class="group text-center">
+          <div
+            class="inline-block p-4 mb-6 border border-gray-100 bg-gray-50 group-hover:border-amber-600 transition-colors duration-300"
+          >
+            <svg
+              class="w-8 h-8 text-amber-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+          <h3
+            class="text-lg font-bold text-gray-900 uppercase tracking-widest mb-3"
+          >
+            Prime Location
+          </h3>
+          <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
+            Centrally located in the heart of Dhaka, ensuring easy access to
+            major business hubs.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROOMS -->
+    <section class="bg-gray-100 py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-2">Our Rooms</h2>
+        <p class="text-center text-gray-500 mb-10">Choose your perfect stay</p>
+
+        <div
+          id="rooms-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        ></div>
+
+        <!-- LOADING -->
+        <div
+          id="loading"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <div
+            class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse"
+          >
+            <div class="h-52 bg-gray-200"></div>
+            <div class="p-5 space-y-3">
+              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div class="h-3 bg-gray-200 rounded w-full"></div>
+              <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+              <div class="h-8 bg-gray-200 rounded w-1/3 mt-4"></div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse"
+          >
+            <div class="h-52 bg-gray-200"></div>
+            <div class="p-5 space-y-3">
+              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div class="h-3 bg-gray-200 rounded w-full"></div>
+              <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+              <div class="h-8 bg-gray-200 rounded w-1/3 mt-4"></div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse"
+          >
+            <div class="h-52 bg-gray-200"></div>
+            <div class="p-5 space-y-3">
+              <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div class="h-3 bg-gray-200 rounded w-full"></div>
+              <div class="h-3 bg-gray-200 rounded w-2/3"></div>
+              <div class="h-8 bg-gray-200 rounded w-1/3 mt-4"></div>
+            </div>
           </div>
         </div>
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
-          <div class="h-48 bg-gray-200"></div>
-          <div class="p-4 space-y-2">
-            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
-          </div>
-        </div>
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
-          <div class="h-48 bg-gray-200"></div>
-          <div class="p-4 space-y-2">
-            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
-          </div>
+
+        <!-- NO ROOMS -->
+        <div
+          id="no-rooms"
+          class="hidden text-center text-gray-400 py-20 text-lg"
+        >
+          No rooms found.
         </div>
       </div>
-      <div class="text-center mt-10">
-        <a href="rooms.html" class="border border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white px-6 py-2 rounded-full transition">View All Rooms</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER -->
-  <footer class="bg-gray-800 text-gray-400 text-center py-8 text-sm">
-    <p class="text-white font-semibold text-lg mb-1">অতিথি | Atithi</p>
-    <p>Mirpur, Dhaka, Bangladesh</p>
-    <p class="mt-2">© 2025 Atithi Hotel. All rights reserved.</p>
-  </footer>
+    <!-- FOOTER -->
+    <div id="footer"></div>
 
-  <script src="js/main.js"></script>
-</body>
+    <script src="js/include.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/rooms.js"></script>
+  </body>
 </html>

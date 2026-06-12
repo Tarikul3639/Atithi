@@ -2,49 +2,38 @@
 header("Content-Type: application/json");
 require_once "../config/db.php";
 
-// ❌ VULNERABLE: সরাসরি $_GET['id'] ব্যবহার, কোনো sanitization বা prepared statement নেই
-// $id = $_GET['id'] ?? '0';
+// ⚠️ VULNERABILITY ADDED: intval() সরিয়ে ফেলা হয়েছে, সরাসরি $_GET নেওয়া হচ্ছে
+$id = $_GET['id'] ?? '0';
 
-// ✅ SAFE (commented): intval() ব্যবহার করে integer conversion
-$id = intval($_GET['id'] ?? 0);
+// বাকি অংশ সুরক্ষিত রাখার চেষ্টা করা হয়েছে (যেমন error handling, output structure)
 if(!$id){
     echo json_encode(["success" => false, "message" => "Room ID required"]);
     exit;
 }
 
-// ❌ VULNERABLE QUERY – direct concatenation (SQL injection possible)
-// $query = "SELECT * FROM rooms WHERE id = $id";
-
-// ✅ SAFE QUERY (commented) – prepared statement ব্যবহার করলে injection বন্ধ হয়
-$query = "SELECT * FROM rooms WHERE id = :id";
-$stmt = $pdo->prepare($query);
-$stmt->execute([':id' => $id]);
-$room = $stmt->fetch(PDO::FETCH_ASSOC);
-
 try {
-    // Vulnerable execution
+    // ❌ VULNERABLE QUERY: স্ট্রিং কনকাটেনেশন (SQL injection সম্ভব)
+    $query = "SELECT * FROM rooms WHERE id = $id";
     $result = $pdo->query($query);
     $room = $result->fetch(PDO::FETCH_ASSOC);
 
     if (!$room) {
         echo json_encode([
             "success" => false,
-            "message" => "Room not found",
-            "sql" => $query
+            "message" => "Room not found"
         ]);
         exit;
     }
 
     echo json_encode([
         "success" => true,
-        "room" => $room,
-        "sql" => $query
+        "room" => $room
     ]);
 } catch (PDOException $e) {
+    // নিরাপদ error message (ডিবাগ তথ্য বাইরে দেয়া হয়নি)
     echo json_encode([
         "success" => false,
-        "error" => $e->getMessage(),
-        "sql" => $query
+        "message" => "Database error occurred"
     ]);
 }
 ?>
