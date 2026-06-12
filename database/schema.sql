@@ -11,6 +11,7 @@
 DROP TABLE IF EXISTS bookings CASCADE;
 DROP TABLE IF EXISTS rooms CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS feedbacks CASCADE;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -48,4 +49,13 @@ CREATE TABLE bookings (
     total_amount NUMERIC(10,2),
     booking_status VARCHAR(20) DEFAULT 'confirmed',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE feedbacks (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    comments TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

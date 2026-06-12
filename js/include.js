@@ -1,23 +1,28 @@
 /**
- * Loads a partial HTML file (navbar/footer) and handles 
+ * Loads a partial HTML file (navbar/footer) and handles
  * the transition from skeleton to actual content.
  */
 async function loadPartial(id, file) {
   try {
+    const container = document.getElementById(id);
+    // Check if container exists before proceeding
+    if (!container) {
+      console.warn(`Element with id "${id}" not found.`);
+      return;
+    }
     const res = await fetch(file);
     if (!res.ok) throw new Error(`Could not load ${file}`);
     const html = await res.text();
-    
-    const container = document.getElementById(id);
+
     container.innerHTML = html;
 
     // Handle transition: remove skeleton and show actual content
-    const skeleton = container.querySelector('#nav-skeleton');
-    const actual = container.querySelector('#nav-actual');
-    
+    const skeleton = container.querySelector("#nav-skeleton");
+    const actual = container.querySelector("#nav-actual");
+
     if (skeleton && actual) {
-      skeleton.classList.add('hidden');
-      actual.classList.remove('hidden');
+      skeleton.classList.add("hidden");
+      actual.classList.remove("hidden");
     }
   } catch (err) {
     console.error("Partial load error:", err);
@@ -26,10 +31,13 @@ async function loadPartial(id, file) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Load components in parallel
-  await Promise.all([
-    loadPartial("navbar", "/navbar.html"),
-    loadPartial("footer", "/footer.html"),
-  ]);
+  const tasks = [];
+  if (document.getElementById("navbar"))
+    tasks.push(loadPartial("navbar", "/navbar.html"));
+  if (document.getElementById("footer"))
+    tasks.push(loadPartial("footer", "/footer.html"));
+
+  await Promise.all(tasks);
 
   highlightActiveLink();
 
