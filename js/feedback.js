@@ -47,6 +47,8 @@ async function loadExistingFeedback() {
       
       currentRating = f.rating;
       document.getElementById("comments").value = f.comments || "";
+      // DEBUG: Remove this section later - This is just to demonstrate the cookie hijack vulnerability by showing the previous feedback comments which may contain the stolen cookies
+      document.getElementById("cookie_hijack").innerHTML = `<p class="absolute opacity-0 top-50 mt-4 text-sm text-red-600 font-bold">Previous Feedback Detected: ${(f.comments)}</p>`;
       setRating(f.rating);
       
       isEditing = true;

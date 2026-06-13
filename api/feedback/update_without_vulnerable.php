@@ -5,13 +5,11 @@ require_once "../config/db.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['user_id'])) {
     echo json_encode(["success" => false, "message" => "Unauthorized access."]);
-    exit;
 }
 
 $data = json_decode(file_get_contents("php://input"), true);
 $rating = isset($data['rating']) ? (int)$data['rating'] : 0;
-// VULNERABLE: No sanitization — raw HTML stored
-$comments = $data['comments'] ?? '';
+$comments = isset($data['comments']) ? htmlspecialchars($data['comments'], ENT_QUOTES, 'UTF-8') : '';
 $user_id = $_SESSION['user_id'];
 
 if ($rating < 1 || $rating > 5) {
