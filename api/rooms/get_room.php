@@ -2,38 +2,36 @@
 header("Content-Type: application/json");
 require_once "../config/db.php";
 
-// ⚠️ VULNERABILITY ADDED: intval() সরিয়ে ফেলা হয়েছে, সরাসরি $_GET নেওয়া হচ্ছে
+// ❌ VULNERABLE: সরাসরি $_GET['id'] ব্যবহার, কোনো sanitization বা prepared statement নেই
 $id = $_GET['id'] ?? '0';
 
-// বাকি অংশ সুরক্ষিত রাখার চেষ্টা করা হয়েছে (যেমন error handling, output structure)
-if(!$id){
-    echo json_encode(["success" => false, "message" => "Room ID required"]);
-    exit;
-}
+// বিপজ্জনক কোয়েরি – এখানে injection হবে
+$query = "SELECT * FROM rooms WHERE id = $id";
 
 try {
-    // ❌ VULNERABLE QUERY: স্ট্রিং কনকাটেনেশন (SQL injection সম্ভব)
-    $query = "SELECT * FROM rooms WHERE id = $id";
     $result = $pdo->query($query);
     $room = $result->fetch(PDO::FETCH_ASSOC);
-
-    if (!$room) {
+    
+    if(!$room){
         echo json_encode([
             "success" => false,
-            "message" => "Room not found"
+            "message" => "Room not found",
+            "sql" => $query   // debugging (শিক্ষকের জন্য দেখাবেন)
         ]);
         exit;
     }
-
+    
     echo json_encode([
         "success" => true,
-        "room" => $room
+        "room" => $room,
+        "sql" => $query
     ]);
 } catch (PDOException $e) {
-    // নিরাপদ error message (ডিবাগ তথ্য বাইরে দেয়া হয়নি)
+    // error message sqlmap কে কাজ করতে সাহায্য করে
     echo json_encode([
         "success" => false,
-        "message" => "Database error occurred"
+        "error" => $e->getMessage(),
+        "sql" => $query
     ]);
 }
 ?>

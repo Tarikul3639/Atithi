@@ -11,48 +11,110 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-800">
-    
     <!-- NAVBAR -->
-    <div id="navbar" class="sticky top-0 z-50 bg-white border-b border-slate-200"></div>
+    <div
+      id="navbar"
+      class="sticky top-0 z-50 bg-white border-b border-slate-200"
+    ></div>
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 py-16 px-4">
       <div class="max-w-xl mx-auto">
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-10">
-          
           <!-- PROFILE HEADER WITH INITIALS -->
-          <div class="flex flex-col items-center border-b border-slate-100 pb-8 mb-8">
-            <div id="avatar-container" class="w-20 h-20 bg-slate-800 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4 shadow-md">
+          <div
+            class="flex flex-col items-center border-b border-slate-100 pb-8 mb-8"
+          >
+            <div
+              id="avatar-container"
+              class="w-20 h-20 bg-slate-800 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4 shadow-md"
+            >
               <!-- Initials will be injected here -->
             </div>
-            <h1 class="text-2xl font-serif font-bold text-slate-900">Personal Information</h1>
-            <p class="text-slate-500 text-sm mt-1">Manage your account details</p>
+            <h1 class="text-2xl font-serif font-bold text-slate-900">
+              Personal Information
+            </h1>
+            <p class="text-slate-500 text-sm mt-1">
+              Manage your account details
+            </p>
           </div>
 
           <!-- MESSAGES -->
-          <div id="error-msg" class="hidden bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-3 rounded-md mb-6"></div>
-          <div id="success-msg" class="hidden bg-emerald-50 border border-emerald-100 text-emerald-600 text-sm px-4 py-3 rounded-md mb-6">Profile updated successfully.</div>
+          <div
+            id="error-msg"
+            class="hidden bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-3 rounded-md mb-6"
+          ></div>
+          <div
+            id="success-msg"
+            class="hidden bg-emerald-50 border border-emerald-100 text-emerald-600 text-sm px-4 py-3 rounded-md mb-6"
+          >
+            Profile updated successfully.
+          </div>
 
           <!-- FORM -->
           <div class="space-y-6">
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Full Name</label>
-              <input type="text" id="name" class="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-2.5 focus:outline-none focus:border-amber-600 transition" />
+              <label
+                class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2"
+                >Full Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                class="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-2.5 focus:outline-none focus:border-amber-600 transition"
+              />
             </div>
 
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Email Address</label>
-              <input type="email" id="email" disabled class="w-full bg-slate-100 border border-slate-200 rounded-md px-4 py-2.5 text-slate-400 cursor-not-allowed" />
+              <label
+                class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                disabled
+                class="w-full bg-slate-100 border border-slate-200 rounded-md px-4 py-2.5 text-slate-400 cursor-not-allowed"
+              />
             </div>
 
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Phone Number</label>
-              <input type="text" id="phone" class="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-2.5 focus:outline-none focus:border-amber-600 transition" />
+              <label
+                class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2"
+                >Phone Number</label
+              >
+              <input
+                type="text"
+                id="phone"
+                class="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-2.5 focus:outline-none focus:border-amber-600 transition"
+              />
             </div>
 
             <div>
-              <label class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Member Since</label>
-              <input type="text" id="member-since" disabled class="w-full bg-slate-100 border border-slate-200 rounded-md px-4 py-2.5 text-slate-400 cursor-not-allowed" />
+              <label
+                class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2"
+                >Member Since</label
+              >
+              <input
+                type="text"
+                id="member-since"
+                disabled
+                class="w-full bg-slate-100 border border-slate-200 rounded-md px-4 py-2.5 text-slate-400 cursor-not-allowed"
+              />
+            </div>
+
+            <!-- Password Update -->
+            <div>
+              <label
+                class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2"
+                >New Password</label
+              >
+              <input
+                type="password"
+                id="password"
+                placeholder="Leave blank to keep current"
+                class="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-2.5 focus:outline-none focus:border-amber-600 transition"
+              />
             </div>
 
             <button
@@ -74,27 +136,27 @@
       async function loadProfile() {
         try {
           const res = await axios.get("api/auth/profile.php");
-          if (!res.data.success) { window.location.href = "login.html"; return; }
+          if (!res.data.success) {
+            window.location.href = "login.html";
+            return;
+          }
 
           const user = res.data.user;
           document.getElementById("name").value = user.name || "";
           document.getElementById("email").value = user.email || "";
           document.getElementById("phone").value = user.phone || "";
-          document.getElementById("member-since").value = user.created_at ? new Date(user.created_at).toLocaleDateString() : "N/A";
-          
-          // Set Initials
-          const initial = user.name ? user.name.charAt(0).toUpperCase() : "U";
-          document.getElementById("avatar-container").textContent = initial;
-
+          document.getElementById("avatar-container").textContent = user.name
+            ? user.name.charAt(0).toUpperCase()
+            : "U";
         } catch (err) {
-          document.getElementById("error-msg").textContent = "Failed to load profile.";
-          document.getElementById("error-msg").classList.remove("hidden");
+          console.error(err);
         }
       }
 
       async function updateProfile() {
         const name = document.getElementById("name").value.trim();
         const phone = document.getElementById("phone").value.trim();
+        const password = document.getElementById("password").value;
         const btn = document.getElementById("save-btn");
         const error = document.getElementById("error-msg");
         const success = document.getElementById("success-msg");
@@ -105,11 +167,14 @@
         btn.textContent = "Saving...";
 
         try {
-          const res = await axios.post("api/auth/update_profile.php", { name, phone });
+          const res = await axios.post("api/auth/update_profile.php", {
+            name,
+            phone,
+            password,
+          });
           if (res.data.success) {
             success.classList.remove("hidden");
-            // Update Avatar if name changed
-            document.getElementById("avatar-container").textContent = name.charAt(0).toUpperCase();
+            document.getElementById("password").value = "";
           } else {
             error.textContent = res.data.message || "Update failed.";
             error.classList.remove("hidden");

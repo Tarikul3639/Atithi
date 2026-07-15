@@ -216,7 +216,7 @@
       }
 
       async function handleRegister() {
-        console.log("Register clicked");
+        // console.log("Register clicked");
         const name = document.getElementById("name").value.trim();
         const email = document.getElementById("email").value.trim();
         const phone = document.getElementById("phone").value.trim();
@@ -277,7 +277,7 @@
           );
 
           if (res.data.success) {
-            console.log(res.data);
+            // console.log(res.data);
             successMsg.classList.remove("hidden");
 
             setTimeout(() => {

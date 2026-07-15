@@ -166,7 +166,7 @@ if (!$conn) {
 ### 6. Open in Browser
 
 ```
-http://localhost
+  php -S 127.0.0.1:5000
 ```
 
 ---

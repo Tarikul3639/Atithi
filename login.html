@@ -186,7 +186,7 @@
         errorMsg.classList.add("hidden");
         successMsg.classList.add("hidden");
 
-        console.log("Email: ", email, "\nPassword: ", password);
+        // console.log("Email: ", email, "\nPassword: ", password);
 
         if (!email || !password) {
           errorMsg.textContent = "Please fill in all fields.";
@@ -208,7 +208,7 @@
             },
           );
 
-          console.log("Response: ", res);
+          // console.log("Response: ", res);
 
           if (res.data.success) {
             successMsg.classList.remove("hidden");
